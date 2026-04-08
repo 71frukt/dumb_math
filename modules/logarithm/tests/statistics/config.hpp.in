@@ -1,0 +1,25 @@
+// config.hpp.in
+#pragma once
+#include <string_view>
+
+@CONFIG_DEFINES@
+
+namespace dumb_math          {
+namespace logarithm::tests   {
+namespace statistics::config {
+    
+constexpr std::string_view DATA_DIR = "@DATA_DIR@";
+
+// имена файлов без расширения
+constexpr std::string_view FILE_1TOINF_DOUBLE  = "@FILE_1TOINF_DOUBLE@";
+constexpr std::string_view FILE_NEAR1_DOUBLE   = "@FILE_NEAR1_DOUBLE@";
+
+constexpr std::string_view FILE_1TOINF_FLOAT   = "@FILE_1TOINF_FLOAT@";
+constexpr std::string_view FILE_NEAR1_FLOAT    = "@FILE_NEAR1_FLOAT@";
+
+constexpr std::string_view FILE_1TOINF_LDOUBLE = "@FILE_1TOINF_LDOUBLE@";
+constexpr std::string_view FILE_NEAR1_LDOUBLE  = "@FILE_NEAR1_LDOUBLE@";
+
+} // namespace statistics::config
+} // namespace logarithm::tests
+} // namespace dumb_math

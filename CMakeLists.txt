@@ -1,0 +1,50 @@
+cmake_minimum_required(VERSION 3.15)
+project(dumb_math LANGUAGES CXX)
+
+###===========================================DEPENDENCIES==========================================
+find_package(RLogSU QUIET)
+
+if(NOT RLogSU_FOUND)
+    message(STATUS "RLogSU was not found in the system. We use a local copy in lib/RLogSU (or download it if it is not available)...")
+    
+    include(FetchContent)
+    FetchContent_Declare(
+        RLogSU
+        GIT_REPOSITORY https://github.com/71frukt/RLogSU.git
+        GIT_TAG        main
+        SOURCE_DIR     ${CMAKE_CURRENT_SOURCE_DIR}/lib/RLogSU
+    )
+
+    # add_subdirectory тут автоматически
+    FetchContent_MakeAvailable(RLogSU)
+else()
+    message(STATUS "is found in the system, using the system version.")
+endif()
+###===========================================DEPENDENCIES==========================================
+
+#================== public ===============================
+add_library(dumb_math_common INTERFACE)
+target_include_directories(dumb_math_common INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
+#================= private ===============================
+add_library(dumb_math_internal INTERFACE)
+target_include_directories(dumb_math_internal INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib>
+)
+
+#=========================================MODULES====================================================
+add_subdirectory(modules/logarithm)
+
+add_subdirectory(modules/random)
+#=========================================MODULES====================================================
+
+add_library(${PROJECT_NAME} INTERFACE)
+
+target_link_libraries(${PROJECT_NAME} INTERFACE
+    dumb_math_common
+    
+    logarithm
+    random
+)
