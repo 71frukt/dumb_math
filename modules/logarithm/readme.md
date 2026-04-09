@@ -180,12 +180,12 @@ $$\ln(x) = LnArtanh(x), |x - 1| <= 0.15$$
 <table>
   <tr>
     <td width="44%" align="center">
-      <img src="../../assets/logarithm/reduction1/stat_1toInf_float.png" alt="Ошибка (в ULP) ln&lt;float&gt; при x на [-inf, inf]" style="width:100%;">
+      <img src="../../.github/readme_assets/logarithm/reduction1/stat_1toInf_float.png" alt="Ошибка (в ULP) ln&lt;float&gt; при x на [-inf, inf]" style="width:100%;">
       <br>
       <em>Ошибка (в ULP) ln&lt;float&gt; при x на [-inf, inf]</em>
     </td>
     <td width="44%" align="center">
-      <img src="../../assets/logarithm/reduction1/stat_near1_float.png"  alt="Ошибка (в ULP) ln&lt;float&gt; при x вблизи 1.0"     style="width:100%;">
+      <img src="../../.github/readme_assets/logarithm/reduction1/stat_near1_float.png"  alt="Ошибка (в ULP) ln&lt;float&gt; при x вблизи 1.0"     style="width:100%;">
       <br>
       <em>Ошибка (в ULP) ln&lt;float&gt; при x вблизи 1.0</em>
     </td>
@@ -213,12 +213,12 @@ $$\ln(x) = LnArtanh(x), |x - 1| <= 0.15$$
 <table>
   <tr>
     <td width="44%" align="center">
-      <img src="../../assets/logarithm/reduction2/stat_1toInf_float.png" alt="Ошибка (в ULP) ln&lt;float&gt; при x на [-inf, inf]" style="width:100%;">
+      <img src="../../.github/readme_assets/logarithm/reduction2/stat_1toInf_float.png" alt="Ошибка (в ULP) ln&lt;float&gt; при x на [-inf, inf]" style="width:100%;">
       <br>
       <em>Ошибка (в ULP) ln&lt;float&gt; при x на [-inf, inf]</em>
     </td>
     <td width="44%" align="center">
-      <img src="../../assets/logarithm/reduction2/stat_near1_float.png" alt="Ошибка (в ULP) ln&lt;float&gt; при x вблизи 1.0" style="width:100%;">
+      <img src="../../.github/readme_assets/logarithm/reduction2/stat_near1_float.png" alt="Ошибка (в ULP) ln&lt;float&gt; при x вблизи 1.0" style="width:100%;">
       <br>
       <em>Ошибка (в ULP) ln&lt;float&gt; при x вблизи 1.0</em>
     </td>
@@ -228,12 +228,12 @@ $$\ln(x) = LnArtanh(x), |x - 1| <= 0.15$$
 <table>
   <tr>
     <td width="44%" align="center">
-      <img src="../../assets/logarithm/reduction2/stat_1toInf_double.png" alt="Ошибка (в ULP) ln&lt;double&gt; при x на [-inf, inf]" style="width:100%;">
+      <img src="../../.github/readme_assets/logarithm/reduction2/stat_1toInf_double.png" alt="Ошибка (в ULP) ln&lt;double&gt; при x на [-inf, inf]" style="width:100%;">
       <br>
       <em>Ошибка (в ULP) ln&lt;double&gt; при x на [-inf, inf]</em>
     </td>
     <td width="44%" align="center">
-      <img src="../../assets/logarithm/reduction2/stat_near1_double.png" alt="Ошибка (в ULP) ln&lt;double&gt; при x вблизи 1.0" style="width:100%;">
+      <img src="../../.github/readme_assets/logarithm/reduction2/stat_near1_double.png" alt="Ошибка (в ULP) ln&lt;double&gt; при x вблизи 1.0" style="width:100%;">
       <br>
       <em>Ошибка (в ULP) ln&lt;double&gt; при x вблизи 1.0</em>
     </td>

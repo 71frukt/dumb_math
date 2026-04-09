@@ -28,14 +28,14 @@ $\chi^2$ внутри использует генератор чисел с но
 
 <table style="width:100%; text-align:center;">
   <tr>
-    <td><img src="../../assets/random/plot_k1.png"  width="100%"><br>k=1</td>
-    <td><img src="../../assets/random/plot_k2.png"  width="100%"><br>k=2</td>
-    <td><img src="../../assets/random/plot_k3.png"  width="100%"><br>k=3</td>
+    <td><img src="../../../.github/readme_assets/random/plot_k1.png"  width="100%"><br>k=1</td>
+    <td><img src="../../../.github/readme_assets/random/plot_k2.png"  width="100%"><br>k=2</td>
+    <td><img src="../../../.github/readme_assets/random/plot_k3.png"  width="100%"><br>k=3</td>
   </tr>
   <tr>
-    <td><img src="../../assets/random/plot_k4.png"  width="100%"><br>k=4</td>
-    <td><img src="../../assets/random/plot_k5.png"  width="100%"><br>k=5</td>
-    <td><img src="../../assets/random/plot_k10.png" width="100%"><br>k=10</td>
+    <td><img src="../../../.github/readme_assets/random/plot_k4.png"  width="100%"><br>k=4</td>
+    <td><img src="../../../.github/readme_assets/random/plot_k5.png"  width="100%"><br>k=5</td>
+    <td><img src="../../../.github/readme_assets/random/plot_k10.png" width="100%"><br>k=10</td>
   </tr>
 </table>
 
@@ -101,8 +101,8 @@ $$Corr(X, Y) = \frac{\rho \sigma_x \sigma_y}{\sigma_x \sigma_y} = \rho$$
 
 <table style="width:100%; text-align:center;">
   <tr>
-    <td><img src="../../assets/random/bivar_rho0.png"         width="100%"><br>rho = 0.0</td>
-    <td><img src="../../assets/random/bivar_rho0_8.png"       width="100%"><br>rho = 0.8</td>
-    <td><img src="../../assets/random/bivar_rho_minus0_8.png" width="100%"><br>rho = -0.8</td>
+    <td><img src="../../../.github/readme_assets/random/bivar_rho0.png"         width="100%"><br>rho = 0.0</td>
+    <td><img src="../../../.github/readme_assets/random/bivar_rho0_8.png"       width="100%"><br>rho = 0.8</td>
+    <td><img src="../../../.github/readme_assets/random/bivar_rho_minus0_8.png" width="100%"><br>rho = -0.8</td>
   </tr>
 </table>
