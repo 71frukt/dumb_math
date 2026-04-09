@@ -12,7 +12,7 @@ namespace dumb_math::logarithm {
 namespace detail::lookup_table {
 
 constexpr size_t TableSizeExp = 8;
-
+ 
 constexpr std::array<TableItem, 257> LookupTable = {{
     {.x = 1.000000000000000000000L, .one_div_x = 1.000000000000000000000L, .ln_x = 0.000000000000000000000L},
     {.x = 1.003906250000000000000L, .one_div_x = 0.996108949416342412452L, .ln_x = 0.003898640415657323014L},
