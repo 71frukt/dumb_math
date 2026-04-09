@@ -1,0 +1,45 @@
+name: CI logarithm
+
+on:
+  push:
+    paths:
+      - 'modules/logarithm/**'
+      - '.github/workflows/logarithm_ci.yaml'
+  pull_request:
+    paths:
+      - 'modules/logarithm/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/71frukt/dumb-math-env:latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Release, Debug]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure CMake
+      run: |
+        cmake -S . -B build \
+              -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+              -DCMAKE_SYSTEM_PREFIX_PATH="/usr;/usr/local"
+
+    - name: Build project and Generate test data
+      run: |
+        cmake --build build --target logarithm_unittests -j $(nproc)
+        cmake --build build --target generate_plots -j $(nproc)
+
+    - name: Run CTest
+      run: |
+        ctest --test-dir build/source/dumb_math/modules/logarithm/tests \
+              --build-config ${{ matrix.build_type }} \
+              --output-on-failure

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(dumb_math LANGUAGES CXX)
 
-###===========================================DEPENDENCIES==========================================
+###=========================================== DEPENDENCIES-RLogSU ==========================================
 find_package(RLogSU QUIET)
 
 if(NOT RLogSU_FOUND)
@@ -20,7 +20,7 @@ if(NOT RLogSU_FOUND)
 else()
     message(STATUS "is found in the system, using the system version.")
 endif()
-###===========================================DEPENDENCIES==========================================
+###=========================================== DEPENDENCIES-RLogSU ==========================================
 
 #================== public ===============================
 add_library(dumb_math_common INTERFACE)
@@ -34,11 +34,11 @@ target_include_directories(dumb_math_internal INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib>
 )
 
-#=========================================MODULES====================================================
+#========================================= MODULES ====================================================
 add_subdirectory(modules/logarithm)
-
 add_subdirectory(modules/random)
-#=========================================MODULES====================================================
+add_subdirectory(modules/matrix)
+#========================================= MODULES ====================================================
 
 add_library(${PROJECT_NAME} INTERFACE)
 
@@ -47,4 +47,5 @@ target_link_libraries(${PROJECT_NAME} INTERFACE
     
     logarithm
     random
+    matrix
 )
