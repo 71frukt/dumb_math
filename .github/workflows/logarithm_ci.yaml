@@ -40,6 +40,6 @@ jobs:
 
     - name: Run CTest
       run: |
-        ctest --test-dir build/dumb_math/modules/logarithm/tests \
+        ctest --test-dir build/modules/logarithm/tests \
               --build-config ${{ matrix.build_type }} \
               --output-on-failure
