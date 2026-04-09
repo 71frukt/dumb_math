@@ -1,7 +1,7 @@
-add_subdirectory(rnd_bit_generators)
-add_subdirectory(rnd_normal_generator)
-add_subdirectory(chi_sq_generator)
-add_subdirectory(bivariate_normal_generator)
+add_subdirectory(generators/rnd_bit_generators)
+add_subdirectory(generators/rnd_normal_generator)
+add_subdirectory(generators/chi_sq_generator)
+add_subdirectory(generators/bivariate_normal_generator)
 add_subdirectory(test_battery)
 
 add_library(random INTERFACE)
