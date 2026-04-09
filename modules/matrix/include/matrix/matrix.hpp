@@ -30,7 +30,8 @@ private:
     std::vector<std::vector<float>> data_;
 
 private:
-    Matrix DumbMul_(const Matrix& other) const;
+    Matrix DumbMul0_(const Matrix& other) const;
+    Matrix DumbMul1_(const Matrix& other) const;
 };
 
 } // namespace dumb_math::matrix
