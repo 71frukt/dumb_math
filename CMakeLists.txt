@@ -63,6 +63,7 @@ target_include_directories(dumb_math_internal INTERFACE
 add_subdirectory(modules/logarithm)
 add_subdirectory(modules/random)
 add_subdirectory(modules/matrix)
+add_subdirectory(modules/performance_test)
 #========================================= /MODULES ===================================================
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -73,5 +74,6 @@ target_link_libraries(${PROJECT_NAME} INTERFACE
     logarithm
     random
     matrix
+    performance_test
 )
 

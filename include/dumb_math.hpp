@@ -15,4 +15,6 @@
 #include "two_level_test/two_level_tester.hpp"
 #include "first_level_tests/disjoint_vectors.hpp"
 #include "first_level_tests/fourier_tester.hpp"
-#include "utils/generate_bit_seq.hpp"
+
+#include "performance_test/common.hpp"
+#include "performance_test/latency_test.hpp"
