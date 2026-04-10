@@ -7,6 +7,24 @@
 
 namespace dumb_math::matrix {
 
+bool Matrix::operator==(const Matrix& other) const noexcept
+{
+    if (this->M != other.M || this->N != other.N)
+    {
+        return false;
+    }
+
+    for (size_t m = 0; m < this->M; m++)
+    {
+        if ((*this)[m] != other[m])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 std::vector<float>& Matrix::operator[](const size_t i) noexcept
 {
     return data_[i];
@@ -27,63 +45,62 @@ const std::vector<float>& Matrix::at(const size_t i) const
     return data_.at(i);
 }
 
-
-static float LineMulCol(const Matrix& m1, const Matrix& m2, const size_t line, const size_t col)
+void Matrix::AssertMatixMulConsistency_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest)
 {
-    RLSU_ASSERT(m1.M >= line && m2.N >= col);
-    RLSU_ASSERT(m1.N == m2.M, "m1.N = {}, m2.M = {}", m1.N, m2.M);
-
-    float result = 0;
-
-    for (size_t i = 0; i < m1.N; i++)
-    {
-        result += m1[line][i] * m2[i][col];
-    }
-
-    return result;
+    RLSU_ASSERT(matrix1.N == matrix2.M &&
+                matrix1.M == matrix_dest.M && matrix2.N == matrix_dest.N,
+                "inconsistent matrices: matrix1 [{}x{}], matrix2[{}x{}], matrix_dest[{}x{}]", 
+                                        matrix1.M,     matrix1.N, 
+                                        matrix2.M,     matrix2.N,
+                                        matrix_dest.M, matrix_dest.N);
 }
 
-Matrix Matrix::DumbMul0_(const Matrix& other) const
-{
-    if (!(this->N == other.M))
-        RLSU_THROW<std::runtime_error>(RLSU_FORMAT("inconsistent matrices: this->M = {}, this->N = {}, other.M = {}, other.N = {}", 
-                                                                                        this->M,      this->N,      other.M,      other.N));
-    Matrix result(this->M, other.N);
 
-    for (size_t m = 0; m < result.M; m++)
+static float LineMulCol(const Matrix& matrix1, const Matrix& matrix2, const size_t line, const size_t col)
+{
+    RLSU_ASSERT(matrix1.M >= line && matrix2.N >= col);
+    RLSU_ASSERT(matrix1.N == matrix2.M, "matrix1.N = {}, matrix2.M = {}", matrix1.N, matrix2.M);
+
+    float matrix_dest = 0;
+
+    for (size_t i = 0; i < matrix1.N; i++)
     {
-        for (size_t n = 0; n < result.N; n++)
+        matrix_dest += matrix1[line][i] * matrix2[i][col];
+    }
+
+    return matrix_dest;
+}
+
+void Matrix::DumbMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest)
+{
+    AssertMatixMulConsistency_(matrix1, matrix2, matrix_dest);
+    
+    for (size_t m = 0; m < matrix_dest.M; m++)
+    {
+        for (size_t n = 0; n < matrix_dest.N; n++)
         {
-            result[m][n] = LineMulCol(*this, other, m, n);
+            matrix_dest[m][n] = LineMulCol(matrix1, matrix2, m, n);
         }
     }
-
-    return result;
 }
 
 
-Matrix Matrix::DumbMul1_(const Matrix& other) const
+void Matrix::DumbMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest)
 {
-    if (this->N != other.M)
-        RLSU_THROW<std::runtime_error>(RLSU_FORMAT("inconsistent matrices: this->M = {}, this->N = {}, other.M = {}, other.N = {}", 
-                                                                                        this->M,      this->N,      other.M,      other.N));
-    
-    Matrix result(this->M, other.N);
+    AssertMatixMulConsistency_(matrix1, matrix2, matrix_dest);
 
-    for (size_t m = 0; m < this->M; m++)
+    for (size_t m = 0; m < matrix1.M; m++)
     {
-        for (size_t i = 0; i < this->N; i++)
+        for (size_t i = 0; i < matrix1.N; i++)
         {
-            float m1_val = (*this)[m][i];
+            float matrix1_val = matrix1[m][i];
             
-            for (size_t n = 0; n < other.N; n++)
+            for (size_t n = 0; n < matrix2.N; n++)
             {
-                result[m][n] += m1_val * other[i][n];
+                matrix_dest[m][n] += matrix1_val * matrix2[i][n];
             }
         }
     }
-
-    return result;
 }
 
 

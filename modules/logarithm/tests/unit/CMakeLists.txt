@@ -14,7 +14,7 @@ target_link_libraries(${PROJECT_NAME}
         dumb_math_common
         dumb_math_internal
         
-        tests_common
+        ln_tests_common
 
         logarithm
 

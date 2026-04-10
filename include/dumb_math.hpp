@@ -16,5 +16,7 @@
 #include "first_level_tests/disjoint_vectors.hpp"
 #include "first_level_tests/fourier_tester.hpp"
 
-#include "performance_test/common.hpp"
-#include "performance_test/latency_test.hpp"
+#include "matrix/matrix.hpp"
+
+#include "benchmarking/common.hpp"
+#include "benchmarking/latency_test.hpp"

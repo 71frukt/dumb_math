@@ -3,7 +3,7 @@
 #include <vector>
 
 namespace dumb_math::random {
-namespace variance          {
+namespace variance_calc     {
 
 template <std::floating_point T>
 auto Fast(const std::vector<T>& data)
@@ -75,5 +75,5 @@ auto OnePass(const std::vector<T>& data)
     return dx_cur;
 }
 
-} // namespace variance
+} // namespace variance_calc
 } // namespace dumb_math::random

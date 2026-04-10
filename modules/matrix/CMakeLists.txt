@@ -16,8 +16,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 #================= Tests =============================================
-# option(LN_BUILD_TESTING "Build ln tests" ON)
+option(MATRIX_BUILD_TESTING "Build MATRIX tests" ON)
 
-# if(LN_BUILD_TESTING)
-#     add_subdirectory(tests)
-# endif()
+if(MATRIX_BUILD_TESTING)
+    add_subdirectory(tests)
+endif()

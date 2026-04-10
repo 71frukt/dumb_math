@@ -44,6 +44,18 @@ if(BUILD_TESTING)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
 endif()
+
+
+# защита от запуска бенчмарков без оптимизаций
+if(BUILD_TESTING)
+    if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+        message(STATUS "Set CMAKE_BUILD_TYPE in 'Release' for correct benchmarking.")
+        set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
+    elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        message(WARNING "WARNING: Build in Debug mode! Benchmarking results (TestLatency) will be distorted and make no sense.")
+    endif()
+endif()
+
 #============================================= /GTESTS ======================================================
 
 
@@ -60,20 +72,21 @@ target_include_directories(dumb_math_internal INTERFACE
 )
 
 #========================================= MODULES ====================================================
+add_subdirectory(modules/benchmarking)
 add_subdirectory(modules/logarithm)
 add_subdirectory(modules/random)
 add_subdirectory(modules/matrix)
-add_subdirectory(modules/performance_test)
 #========================================= /MODULES ===================================================
 
 add_library(${PROJECT_NAME} INTERFACE)
 
-target_link_libraries(${PROJECT_NAME} INTERFACE
-    dumb_math_common
-    
-    logarithm
-    random
-    matrix
-    performance_test
+target_link_libraries(${PROJECT_NAME}
+    INTERFACE
+        dumb_math_common
+        
+        benchmarking
+        logarithm
+        random
+        matrix
 )
 

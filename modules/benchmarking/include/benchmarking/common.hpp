@@ -1,7 +1,9 @@
 #pragma once
 
+#include "RLogSU/logger.hpp"
 #include <cstdint>
 #include <functional>
+#include <fstream>
 
 #ifdef _MSC_VER
 #include <intrin.h>
@@ -10,12 +12,12 @@
 #include <cpuid.h>
 #endif
 
-namespace dumb_math::performante_test {
+namespace dumb_math::benchmarking {
 
 struct ResultT
 {
     double average;
-    double variance;
+    double standard_deviation;
 };
 
 
@@ -64,6 +66,22 @@ __attribute__((always_inline)) inline uint64_t StopTimer()
     uint64_t end = __rdtscp(&dummy);
     ClobberMemory();
     return end;
+}
+
+inline void CheckCpuGovernor()
+{
+    std::ifstream governor_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
+    std::string governor;
+
+    if (governor_file >> governor)
+    {
+        if (governor != "performance")
+        {
+            RLSU_WARNING("CPU governor is set to '{}''. Frequency scaling is enabled.\n"
+                                "Benchmark results may be noisy.                           \n"
+                                "Run `sudo ./utils/set_performance.sh` before testing.      \n");
+        }
+    }
 }
 
 } // namespace detail

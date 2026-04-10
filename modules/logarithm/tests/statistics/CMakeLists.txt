@@ -7,7 +7,7 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         RLogSU
         dumb_math_common
-        tests_common
+        ln_tests_common
 )
 
 target_compile_definitions(${PROJECT_NAME}

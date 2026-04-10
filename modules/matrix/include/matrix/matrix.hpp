@@ -16,6 +16,8 @@ public:
     {}
 
 public:
+    bool operator==(const Matrix& other) const noexcept;
+
     const std::vector<float>& operator[] (const size_t i) const noexcept;
           std::vector<float>& operator[] (const size_t i)       noexcept;
     const std::vector<float>& at         (const size_t i) const;
@@ -29,9 +31,12 @@ private:
 
     std::vector<std::vector<float>> data_;
 
-private:
-    Matrix DumbMul0_(const Matrix& other) const;
-    Matrix DumbMul1_(const Matrix& other) const;
+    static void AssertMatixMulConsistency_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
+
+// private:
+public:
+    static void DumbMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
+    static void DumbMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
 };
 
 } // namespace dumb_math::matrix
