@@ -44,9 +44,11 @@ private:
 
 // private:
 public:
-    static void DumbMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
-    static void DumbMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
-    static void OptMul0_ (const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
+    static void DumbMul0_  (const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
+    static void DumbMul1_  (const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
+    static void OptMul0_   (const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
+    static void OptMul1_   (const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
+    static void BlockMul0_ (const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest);
 
 };
 

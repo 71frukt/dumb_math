@@ -103,6 +103,42 @@ void Matrix::DumbMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& mat
 
 void Matrix::OptMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest)
 {
+
+    const float* const m1_data = matrix1 .data_.data();
+    const float* const m2_data = matrix2 .data_.data();
+          float* const dest_data     = matrix_dest.data_.data();
+
+    RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m1_data )  % 64) == 0 &&     "matrix1 is NOT 64-byte aligned!");
+    RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m2_data )  % 64) == 0 &&     "matrix2 is NOT 64-byte aligned!");
+    RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(dest_data) % 64) == 0 && "matrix_dest is NOT 64-byte aligned!");
+
+    AssertMatixMulConsistency_(matrix1, matrix2, matrix_dest);
+
+    RLSU_ASSERT(m1_data != dest_data && m2_data != dest_data, "dest matrix is one of the source!");
+
+    const float* __restrict__ m1_carr   = static_cast<const float*>(__builtin_assume_aligned(m1_data,   64));
+    const float* __restrict__ m2_carr   = static_cast<const float*>(__builtin_assume_aligned(m2_data,   64));
+          float* __restrict__ dest_carr = static_cast<      float*>(__builtin_assume_aligned(dest_data, 64));
+
+    for (size_t row = 0; row < matrix1.rows; row++)
+    {
+        for (size_t i = 0; i < matrix1.cols; i++)
+        {
+            float matrix1_val = m1_carr[row * matrix1.cols + i];
+    
+            for (size_t col = 0; col < matrix2.cols; col++)
+            {
+                dest_carr[row * matrix_dest.cols + col] += matrix1_val * m2_carr[i * matrix2.cols + col];
+            }
+        }
+
+    }
+
+}
+
+
+void Matrix::OptMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest)
+{
     const float* const m1_data   = matrix1    .data_.data();
     const float* const m2_data   = matrix2    .data_.data();
           float* const dest_data = matrix_dest.data_.data();

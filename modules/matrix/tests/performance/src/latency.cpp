@@ -15,13 +15,13 @@ void RunMatrixBenchmark(const std::string& test_name, Func mult_func)
 {
     using namespace dumb_math;
 
-    matrix::Matrix matrix1    (32, 64);
-    matrix::Matrix matrix2    (64, 128);
-    matrix::Matrix matrix_dest(32, 128);
+    matrix::Matrix matrix1    (512, 512);
+    matrix::Matrix matrix2    (512, 512);
+    matrix::Matrix matrix_dest(512, 512);
 
     benchmarking::ResultT res = benchmarking::TestLatency([&]() {
         mult_func(matrix1, matrix2, matrix_dest); 
-    });
+    }, 10, 10, 1);
 
     namespace fs = std::filesystem;
     
@@ -61,4 +61,9 @@ TEST(MatrixPerformance, DumbMul1)
 TEST(MatrixPerformance, OptMul0)
 {
     RunMatrixBenchmark("OptMul0", dumb_math::matrix::Matrix::OptMul0_);
+}
+
+TEST(MatrixPerformance, OptMul1)
+{
+    RunMatrixBenchmark("OptMul1", dumb_math::matrix::Matrix::OptMul1_);
 }
