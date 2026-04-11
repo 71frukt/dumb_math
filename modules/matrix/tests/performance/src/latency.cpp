@@ -41,18 +41,24 @@ void RunMatrixBenchmark(const std::string& test_name, Func mult_func)
                   << " Latency: " << res.average 
                   << " cycles, CV: " << (cv * 100.0) << "%\n";
     }
+    
     else
     {
         FAIL() << "Couldn't create or open a file: " << ofile_path;
     }
 }
 
-TEST(MatrixPerformance, DumbMul0) 
+TEST(MatrixPerformance, DumbMul0)
 {
     RunMatrixBenchmark("DumbMul0", dumb_math::matrix::Matrix::DumbMul0_);
 }
 
-TEST(MatrixPerformance, DumbMul1) 
+TEST(MatrixPerformance, DumbMul1)
 {
     RunMatrixBenchmark("DumbMul1", dumb_math::matrix::Matrix::DumbMul1_);
+}
+
+TEST(MatrixPerformance, OptMul0)
+{
+    RunMatrixBenchmark("OptMul0", dumb_math::matrix::Matrix::OptMul0_);
 }

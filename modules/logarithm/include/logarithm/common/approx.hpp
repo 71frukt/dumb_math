@@ -4,11 +4,11 @@
 
 namespace {
 
-    template <size_t N, typename T>
-    constexpr std::array<T, N> GenerateArtanhCoeffs()
+    template <size_t M, typename T>
+    constexpr std::array<T, M> GenerateArtanhCoeffs()
     {
-        std::array<T, N> coeffs{};
-        for (size_t i = 0; i < N; ++i)
+        std::array<T, M> coeffs{};
+        for (size_t i = 0; i < M; ++i)
         {
             coeffs[i] = T(1.0) / static_cast<T>(2 * i + 1);
         }
@@ -45,7 +45,7 @@ T LnArtgTailorBestAcc_0to2(T x)
 }
 
 
-template <size_t N, std::floating_point T>
+template <size_t M, std::floating_point T>
 T LnArtgTailor_0to2(T x)
 {
     T y = (x - T(1.0)) / (x + T(1.0));
@@ -54,9 +54,9 @@ T LnArtgTailor_0to2(T x)
     T row = T(0.0);
     T y_pow = y;
 
-    static constexpr std::array<T, N> coeffs = ::GenerateArtanhCoeffs<N, T>();
+    static constexpr std::array<T, M> coeffs = ::GenerateArtanhCoeffs<M, T>();
 
-    for (size_t i = 0; i < N; ++i)
+    for (size_t i = 0; i < M; ++i)
     {
         row += y_pow * coeffs[i]; 
         y_pow *= y_sq;

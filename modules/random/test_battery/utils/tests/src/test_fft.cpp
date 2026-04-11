@@ -21,13 +21,13 @@ namespace {
 // Выход: {1, 1, 1, ..., 1} (белый шум)
 TEST(FFTTest, ImpulseResponse)
 {
-    constexpr size_t N = 8;
-    std::vector<std::complex<double>> signal(N, {0.0, 0.0});
+    constexpr size_t M = 8;
+    std::vector<std::complex<double>> signal(M, {0.0, 0.0});
     signal[0] = {1.0, 0.0};
 
     rnd_generators_test::utils::math::FFT(signal);
 
-    for (size_t i = 0; i < N; ++i)
+    for (size_t i = 0; i < M; ++i)
     {
         ExpectComplexNear(signal[i], {1.0, 0.0});
     }
@@ -35,17 +35,17 @@ TEST(FFTTest, ImpulseResponse)
 
 // 2. Тест на постоянную составляющую (DC Component)
 // Вход:  {1, 1, 1, ..., 1}
-// Выход: {N, 0, 0, ..., 0}
+// Выход: {M, 0, 0, ..., 0}
 TEST(FFTTest, DCComponent)
 {
-    constexpr size_t N = 8;
-    std::vector<std::complex<double>> signal(N, {1.0, 0.0});
+    constexpr size_t M = 8;
+    std::vector<std::complex<double>> signal(M, {1.0, 0.0});
 
     rnd_generators_test::utils::math::FFT(signal);
 
-    ExpectComplexNear(signal[0], {static_cast<double>(N), 0.0});
+    ExpectComplexNear(signal[0], {static_cast<double>(M), 0.0});
     
-    for (size_t i = 1; i < N; ++i)
+    for (size_t i = 1; i < M; ++i)
     {
         ExpectComplexNear(signal[i], {0.0, 0.0});
     }
@@ -53,28 +53,28 @@ TEST(FFTTest, DCComponent)
 
 // 3. Тест на чистую гармонику (Sine wave)
 // Вход: Синусоида с частотой k
-// Выход: Два пика с амплитудой N/2 на позициях k и N-k. Остальное - нули.
+// Выход: Два пика с амплитудой M/2 на позициях k и M-k. Остальное - нули.
 TEST(FFTTest, SingleHarmonic)
 {
-    constexpr size_t N = 32;
+    constexpr size_t M = 32;
     constexpr size_t target_frequency = 4;
-    std::vector<std::complex<double>> signal(N);
+    std::vector<std::complex<double>> signal(M);
 
-    for (size_t n = 0; n < N; ++n)
+    for (size_t n = 0; n < M; ++n)
     {
-        double val = std::sin(2.0 * std::numbers::pi * target_frequency * n / N);
+        double val = std::sin(2.0 * std::numbers::pi * target_frequency * n / M);
         signal[n] = {val, 0.0};
     }
 
     rnd_generators_test::utils::math::FFT(signal);
 
-    for (size_t k = 0; k < N; ++k)
+    for (size_t k = 0; k < M; ++k)
     {
         double magnitude = std::abs(signal[k]);
 
-        if (k == target_frequency || k == N - target_frequency)
+        if (k == target_frequency || k == M - target_frequency)
         {
-            EXPECT_NEAR(magnitude, N / 2.0, TOLERANCE) << "Missing peak at bin " << k;
+            EXPECT_NEAR(magnitude, M / 2.0, TOLERANCE) << "Missing peak at bin " << k;
         }
 
         else

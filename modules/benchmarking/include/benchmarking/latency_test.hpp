@@ -17,7 +17,7 @@ namespace dumb_math::benchmarking {
 
 
 template <typename Func>
-[[nodiscard]] ResultT TestLatency(Func&& testing_func, const size_t buckets_num    = 500,
+[[nodiscard]] ResultT TestLatency(Func&& testing_func, const size_t buckets_num    = 100,
                                                        const size_t buckets_size   = 100,
                                                        const size_t test_size      = 10,
                                                        const double emissions_part = 0.05)
