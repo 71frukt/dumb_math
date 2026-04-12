@@ -10,8 +10,8 @@
 #include "benchmarking/latency_test.hpp" 
 #include "matrix/matrix.hpp"
 
-#ifndef DATA_DIR
-#define DATA_DIR "."
+#ifndef LATENCY_TESTS_DIR
+#define LATENCY_TESTS_DIR "."
 #endif
 
 #ifndef PERFORMANCE_TEST_TIME_LIMIT_S
@@ -29,7 +29,7 @@ void RunMatrixBenchmark(const std::string& test_name, Func mult_func)
     double matrix_size = 2.0;
     std::chrono::duration<double> test_time_s = std::chrono::duration<double>::zero();
 
-    while (test_time_s.count() < PERFORMANCE_TEST_TIME_LIMIT_S)
+    while (test_time_s.count() < PERFORMANCE_TEST_TIME_LIMIT_S && matrix_size < 125)
     {
         auto start_s = std::chrono::steady_clock::now();
 
@@ -43,22 +43,21 @@ void RunMatrixBenchmark(const std::string& test_name, Func mult_func)
 
         tests.push_back(Point(matrix_size, res));
 
-        std::cout << "[ BENCHMARK] "  << test_name
+        auto end_s   = std::chrono::steady_clock::now();
+        test_time_s = end_s - start_s;
+        matrix_size *= 2;
+
+        std::cout << std::fixed << std::setprecision(2);
+        std::cout << "[ BMARK    ] " << "[" << test_time_s.count() << " sec] " << test_name
                   << " Matrix size: " << matrix_size
                   << ", Latency: "    << res.average
                   << " cycles, CV: "  << (res.standard_deviation / res.average * 100.0) << "%"
                   << std::endl;
 
-        auto end_s   = std::chrono::steady_clock::now();
-        test_time_s = end_s - start_s;
-        matrix_size *= 2;
     }
 
-    namespace fs = std::filesystem;
-    
-    fs::path dir_path = fs::path(DATA_DIR) / "latency";
-    fs::create_directories(dir_path);
-    fs::path ofile_path = dir_path / (test_name + ".txt");
+    std::filesystem::path dir_path   = std::filesystem::path(LATENCY_TESTS_DIR);
+    std::filesystem::path ofile_path = dir_path / (test_name + ".csv");
 
     benchmarking::ExportResultsToCSV(test_name, tests, ofile_path);
 }

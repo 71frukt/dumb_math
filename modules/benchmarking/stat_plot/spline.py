@@ -4,15 +4,16 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python plot_latency.py <data.csv>")
+    if len(sys.argv) < 3:
+        print("Usage: python plot_latency.py <input_data.csv> <output_plot.png>")
         sys.exit(1)
 
     filename = sys.argv[1]
+    out_filename = sys.argv[2]
 
     # Загрузка данных
     try:
-        data = np.loadtxt(filename, delimiter=',', skiprows=1)
+        data = np.loadtxt(filename, delimiter=',', skiprows=2)
         
         # Сортировка данных по x (обязательно для сплайна)
         data = data[data[:, 0].argsort()]
@@ -58,8 +59,7 @@ def main():
     # Ограничение оси Y снизу нулем
     plt.ylim(bottom=0)
 
-    plt.savefig('latency_plot.png', dpi=300)
-    plt.show()
+    plt.savefig(out_filename, dpi=300)
 
 if __name__ == "__main__":
     main()
