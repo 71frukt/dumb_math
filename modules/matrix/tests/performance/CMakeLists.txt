@@ -49,9 +49,13 @@ set_tests_properties(RunMatrixPerfTest PROPERTIES FIXTURES_REQUIRED MatrixPerfFi
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 add_test(NAME PlotMatrixLatency 
-         COMMAND Python3::Interpreter ${BENCHMARKING_STAT_PLOT_DIR}/spline.py 
+         COMMAND ${Python3_EXECUTABLE} ${BENCHMARKING_STAT_PLOT_DIR}/spline.py 
+                 ${LATENCY_PLOT_FILE}
+                 ${LATENCY_TESTS_DIR}/DumbMul0.csv
+                 ${LATENCY_TESTS_DIR}/DumbMul1.csv
+                 ${LATENCY_TESTS_DIR}/OptMul0.csv 
                  ${LATENCY_TESTS_DIR}/OptMul1.csv 
-                 ${LATENCY_PLOT_FILE})
+                 ${LATENCY_TESTS_DIR}/BlockMul0.csv)
 
 set_tests_properties(PlotMatrixLatency PROPERTIES 
                      DEPENDS RunMatrixPerfTest
