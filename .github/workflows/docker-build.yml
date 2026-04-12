@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '../Dockerfile'
+      - '.github/Dockerfile'    # от корня
 
 jobs:
   docker:
