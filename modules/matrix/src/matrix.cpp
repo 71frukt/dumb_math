@@ -1,6 +1,6 @@
 #include <cstddef>
-#include <stdexcept>
 #include <vector>
+#include <algorithm>
 
 #include "matrix/matrix.hpp"
 #include "RLogSU/logger.hpp"
@@ -143,12 +143,12 @@ void Matrix::OptMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matr
     const float* const m2_data   = matrix2    .data_.data();
           float* const dest_data = matrix_dest.data_.data();
 
+    RLSU_ASSERT(m1_data != dest_data && m2_data != dest_data, "dest matrix is one of the source!");
     RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m1_data  ) % 64) == 0 &&     "matrix1 is NOT 64-byte aligned!");
     RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m2_data  ) % 64) == 0 &&     "matrix2 is NOT 64-byte aligned!");
     RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(dest_data) % 64) == 0 && "matrix_dest is NOT 64-byte aligned!");
     AssertMatixMulConsistency_(matrix1, matrix2, matrix_dest);
 
-    RLSU_ASSERT(m1_data != dest_data && m2_data != dest_data, "dest matrix is one of the source!");
 
     const float* __restrict__ m1_carr   = static_cast<const float*>(__builtin_assume_aligned(m1_data,   64));
     const float* __restrict__ m2_carr   = static_cast<const float*>(__builtin_assume_aligned(m2_data,   64));
@@ -172,5 +172,61 @@ void Matrix::OptMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matr
         }
     }
 }
+
+
+void Matrix::BlockMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest)
+{
+    const float* const m1_data = matrix1.data_.data();
+    const float* const m2_data = matrix2.data_.data();
+    float* dest_data = matrix_dest.data_.data();
+
+    RLSU_ASSERT(m1_data != dest_data && m2_data != dest_data, "dest matrix is one of the source!");
+    RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m1_data  ) % 64) == 0 &&     "matrix1 is NOT 64-byte aligned!");
+    RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m2_data  ) % 64) == 0 &&     "matrix2 is NOT 64-byte aligned!");
+    RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(dest_data) % 64) == 0 && "matrix_dest is NOT 64-byte aligned!");
+    AssertMatixMulConsistency_(matrix1, matrix2, matrix_dest);
+
+    const float* __restrict__ m1_carr   = static_cast<const float*>(__builtin_assume_aligned(m1_data,   64));
+    const float* __restrict__ m2_carr   = static_cast<const float*>(__builtin_assume_aligned(m2_data,   64));
+          float* __restrict__ dest_carr = static_cast<      float*>(__builtin_assume_aligned(dest_data, 64));
+
+    const size_t m1_rows   = matrix1    .rows;
+    const size_t m1_cols   = matrix1    .cols;
+    const size_t m2_cols   = matrix2    .cols;
+    const size_t dest_cols = matrix_dest.cols;
+
+    const size_t block_size = 64;
+
+    const size_t m1_rows_clean = (m1_rows / block_size) * block_size;
+    const size_t m1_cols_clean = (m1_cols / block_size) * block_size;
+    const size_t m2_cols_clean = (m2_cols / block_size) * block_size;
+
+    for (size_t row_blk = 0; row_blk < m1_rows_clean; row_blk += block_size)
+    {
+        for (size_t i_blk = 0; i_blk < m1_cols_clean; i_blk += block_size)
+        {
+            for (size_t col_blk = 0; col_blk < m2_cols_clean; col_blk += block_size)
+            {
+                for (size_t row = row_blk; row < row_blk + block_size; ++row)
+                {
+                    const size_t dest_row_offset = row * dest_cols;
+                    const size_t m1_row_offset   = row * m1_cols;
+
+                    for (size_t i = i_blk; i < i_blk + block_size; ++i)
+                    {
+                        const float matrix1_val = m1_carr[m1_row_offset + i];
+                        const size_t m2_row_offset = i * m2_cols;
+
+                        for (size_t col = col_blk; col < col_blk + block_size; ++col)
+                        {
+                            dest_carr[dest_row_offset + col] += matrix1_val * m2_carr[m2_row_offset + col];
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 } // namespace dumb_math::matrix

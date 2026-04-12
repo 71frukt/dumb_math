@@ -1,9 +1,7 @@
 #pragma once
 
-#include "RLogSU/logger.hpp"
-#include <cstdint>
 #include <functional>
-#include <fstream>
+#include <cstdint>
 
 #ifdef _MSC_VER
 #include <intrin.h>
@@ -19,6 +17,8 @@ struct ResultT
     double average;
     double standard_deviation;
 };
+
+
 
 
 namespace detail {
@@ -68,21 +68,7 @@ __attribute__((always_inline)) inline uint64_t StopTimer()
     return end;
 }
 
-inline void CheckCpuGovernor()
-{
-    std::ifstream governor_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
-    std::string governor;
-
-    if (governor_file >> governor)
-    {
-        if (governor != "performance")
-        {
-            RLSU_WARNING("CPU governor is set to '{}''. Frequency scaling is enabled.\n"
-                                "Benchmark results may be noisy.                           \n"
-                                "Run `sudo ./utils/set_performance.sh` before testing.      \n");
-        }
-    }
-}
+void CheckCpuGovernor();
 
 } // namespace detail
 
