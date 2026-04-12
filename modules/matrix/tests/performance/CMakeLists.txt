@@ -18,8 +18,12 @@ target_link_libraries(${PROJECT_NAME}
 set(DATA_DIR "${CMAKE_CURRENT_BINARY_DIR}")
 file(MAKE_DIRECTORY "${DATA_DIR}")
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    DATA_DIR="${DATA_DIR}"
+set(PERFORMANCE_TEST_TIME_LIMIT_S 10)
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE
+        "DATA_DIR=\"${DATA_DIR}\""
+        "PERFORMANCE_TEST_TIME_LIMIT_S=${PERFORMANCE_TEST_TIME_LIMIT_S}"
 )
 
 #==== Настройка CTest Fixtures (Окружение для бенчмарков) ================

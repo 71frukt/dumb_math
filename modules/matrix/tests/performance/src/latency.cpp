@@ -2,7 +2,11 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <chrono>
+#include <utility>
+#include <vector>
 
+#include "benchmarking/common.hpp"
 #include "benchmarking/latency_test.hpp" 
 #include "matrix/matrix.hpp"
 
@@ -10,42 +14,53 @@
 #define DATA_DIR "."
 #endif
 
+#ifndef PERFORMANCE_TEST_TIME_LIMIT_S
+#define PERFORMANCE_TEST_TIME_LIMIT_S 10
+#endif
+
 template <typename Func>
 void RunMatrixBenchmark(const std::string& test_name, Func mult_func) 
 {
     using namespace dumb_math;
 
-    matrix::Matrix matrix1    (128, 128);
-    matrix::Matrix matrix2    (128, 128);
-    matrix::Matrix matrix_dest(128, 128);
+    using Point = std::pair<double, benchmarking::ResultT>;
+    std::vector<Point> tests;
 
-    benchmarking::ResultT res = benchmarking::TestLatency([&]() {
-        mult_func(matrix1, matrix2, matrix_dest); 
-    }, 10, 10, 10);
+    double matrix_size = 2.0;
+    std::chrono::duration<double> test_time_s = std::chrono::duration<double>::zero();
+
+    while (test_time_s.count() < PERFORMANCE_TEST_TIME_LIMIT_S)
+    {
+        auto start_s = std::chrono::steady_clock::now();
+
+        matrix::Matrix matrix1    (matrix_size, matrix_size);
+        matrix::Matrix matrix2    (matrix_size, matrix_size);
+        matrix::Matrix matrix_dest(matrix_size, matrix_size);
+
+        benchmarking::ResultT res = benchmarking::TestLatency([&]() {
+            mult_func(matrix1, matrix2, matrix_dest); 
+        }, 50, 30, 5);
+
+        tests.push_back(Point(matrix_size, res));
+
+        std::cout << "[ BENCHMARK] "  << test_name
+                  << " Matrix size: " << matrix_size
+                  << ", Latency: "    << res.average
+                  << " cycles, CV: "  << (res.standard_deviation / res.average * 100.0) << "%"
+                  << std::endl;
+
+        auto end_s   = std::chrono::steady_clock::now();
+        test_time_s = end_s - start_s;
+        matrix_size *= 2;
+    }
 
     namespace fs = std::filesystem;
     
-    fs::path dir_path = fs::path(DATA_DIR) / test_name;
+    fs::path dir_path = fs::path(DATA_DIR) / "latency";
     fs::create_directories(dir_path);
-    fs::path ofile_path = dir_path / "latency.txt";
+    fs::path ofile_path = dir_path / (test_name + ".txt");
 
-    std::ofstream ofile(ofile_path);
-
-    if (ofile.is_open()) 
-    {
-        double cv = res.standard_deviation / res.average;
-        ofile << uint64_t(res.average) << " " << cv << "\n";
-        ofile.close();
-        
-        std::cout << "[ BENCHMARK] " << test_name 
-                  << " Latency: " << res.average 
-                  << " cycles, CV: " << (cv * 100.0) << "%\n";
-    }
-    
-    else
-    {
-        FAIL() << "Couldn't create or open a file: " << ofile_path;
-    }
+    benchmarking::ExportResultsToCSV(test_name, tests, ofile_path);
 }
 
 TEST(MatrixPerformance, DumbMul0)

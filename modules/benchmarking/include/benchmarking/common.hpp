@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <cstdint>
+#include <string>
 
 #ifdef _MSC_VER
 #include <intrin.h>
@@ -18,7 +19,7 @@ struct ResultT
     double standard_deviation;
 };
 
-
+void ExportResultsToCSV(std::string curve_name, const std::vector<std::pair<double, ResultT>>& data, const std::string& filename);
 
 
 namespace detail {
