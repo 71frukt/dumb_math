@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <gtest/gtest.h>
 #include <filesystem>
 #include <fstream>
@@ -26,10 +27,10 @@ void RunMatrixBenchmark(const std::string& test_name, Func mult_func)
     using Point = std::pair<double, benchmarking::ResultT>;
     std::vector<Point> tests;
 
-    double matrix_size = 2.0;
+    size_t matrix_size = 2;
     std::chrono::duration<double> test_time_s = std::chrono::duration<double>::zero();
 
-    while (test_time_s.count() < PERFORMANCE_TEST_TIME_LIMIT_S && matrix_size < 125)
+    while (test_time_s.count() < PERFORMANCE_TEST_TIME_LIMIT_S)
     {
         auto start_s = std::chrono::steady_clock::now();
 
@@ -37,15 +38,17 @@ void RunMatrixBenchmark(const std::string& test_name, Func mult_func)
         matrix::Matrix matrix2    (matrix_size, matrix_size);
         matrix::Matrix matrix_dest(matrix_size, matrix_size);
 
+        size_t tests_in_bucket = static_cast<size_t>((16.0 / matrix_size) + 1);
         benchmarking::ResultT res = benchmarking::TestLatency([&]() {
             mult_func(matrix1, matrix2, matrix_dest); 
-        }, 50, 30, 5);
+        }, 10, 8, tests_in_bucket);
 
         tests.push_back(Point(matrix_size, res));
 
         auto end_s   = std::chrono::steady_clock::now();
         test_time_s = end_s - start_s;
-        matrix_size *= 2;
+
+        matrix_size = static_cast<size_t>(static_cast<float>(matrix_size) * 1.25 + 0.5);
 
         std::cout << std::fixed << std::setprecision(2);
         std::cout << "[ BMARK    ] " << "[" << test_time_s.count() << " sec] " << test_name
@@ -85,4 +88,9 @@ TEST(MatrixPerformance, OptMul1)
 TEST(MatrixPerformance, BlockMul0)
 {
     RunMatrixBenchmark("BlockMul0", dumb_math::matrix::Matrix::BlockMul0_);
+}
+
+TEST(MatrixPerformance, BlockMulAvx256)
+{
+    RunMatrixBenchmark("BlockMulAvx256", dumb_math::matrix::Matrix::BlockMulAvx256_);
 }
