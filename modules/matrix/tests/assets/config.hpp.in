@@ -1,0 +1,47 @@
+// generated file
+
+#pragma once
+#include <cstddef>
+#include <string>
+#include <filesystem>
+
+namespace dumb_math      {
+namespace matrix::tests  {
+namespace assets::config {
+    
+const std::filesystem::path RECTANGLE_MATRICIES_DIR = "@RECTANGLE_MATRICIES_DIR@";
+const std::filesystem::path SQUARE_MATRICIES_DIR    = "@SQUARE_MATRICIES_DIR@";
+
+// матрицы генерируются всевозможных размеров от 2 до максимального
+// для каждого размера генерируется определённое количество матриц
+constexpr size_t SQUARE_MATRICIES_MAX_SIZE      = @SQUARE_MATRICIES_MAX_SIZE@;
+constexpr size_t SQUARE_MATRICIES_BLOCK_SIZE    = @SQUARE_MATRICIES_BLOCK_SIZE@;
+
+constexpr size_t RECTANGLE_MATRICIES_MAX_COLS   = @RECTANGLE_MATRICIES_MAX_COLS@;
+constexpr size_t RECTANGLE_MATRICIES_MAX_ROWS   = @RECTANGLE_MATRICIES_MAX_ROWS@;
+constexpr size_t RECTANGLE_MATRICIES_BLOCK_SIZE = @RECTANGLE_MATRICIES_BLOCK_SIZE@;
+
+
+inline std::filesystem::path GetMatrixFolder(const size_t cols, const size_t rows)
+{
+    const std::filesystem::path* folder = &RECTANGLE_MATRICIES_DIR;
+    
+    if (cols == rows)
+        folder = &SQUARE_MATRICIES_DIR;
+
+    std::string block_name = std::to_string(cols) + "x" + std::to_string(rows);
+
+    return block_name;
+}
+
+inline std::filesystem::path GetMatrixDir(const size_t cols, const size_t rows, const size_t num_in_block)
+{
+    std::filesystem::path folder = GetMatrixFolder(cols, rows);
+    std::filesystem::path dir = folder / std::to_string(num_in_block);
+    
+    return dir;
+}
+
+} // namespace assets::config
+} // namespace matrix::tests
+} // namespace dumb_math

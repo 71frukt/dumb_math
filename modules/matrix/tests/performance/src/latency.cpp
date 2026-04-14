@@ -1,7 +1,6 @@
 #include <cstddef>
 #include <gtest/gtest.h>
 #include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <chrono>
 #include <utility>
@@ -11,6 +10,8 @@
 #include "benchmarking/latency_test.hpp" 
 #include "matrix/matrix.hpp"
 
+#include "rnd_bit_generators/mrg32k3a.hpp"
+
 #ifndef LATENCY_TESTS_DIR
 #define LATENCY_TESTS_DIR "."
 #endif
@@ -18,6 +19,10 @@
 #ifndef PERFORMANCE_TEST_TIME_LIMIT_S
 #define PERFORMANCE_TEST_TIME_LIMIT_S 10
 #endif
+
+namespace dumb_math::matrix::tests::performance {
+
+
 
 template <typename Func>
 void RunMatrixBenchmark(const std::string& test_name, Func mult_func) 
@@ -64,6 +69,10 @@ void RunMatrixBenchmark(const std::string& test_name, Func mult_func)
 
     benchmarking::ExportResultsToCSV(test_name, tests, ofile_path);
 }
+
+} // namespace dumb_math::matrix::tests::performance
+
+using namespace dumb_math::matrix::tests::performance;
 
 TEST(MatrixPerformance, DumbMul0)
 {

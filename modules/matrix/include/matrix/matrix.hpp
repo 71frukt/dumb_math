@@ -11,10 +11,10 @@ namespace dumb_math::matrix {
 class Matrix
 {
 public:
-    Matrix(size_t m, size_t n)
-        : rows(m)
-        , cols(n)
-        , data_(m * n)
+    Matrix(size_t rows, size_t cols)
+        : rows(rows)
+        , cols(cols)
+        , data_(rows * cols)
     {}
 
 public:

@@ -56,6 +56,22 @@ public:
         return static_cast<result_t>(z);
     }
 
+public:
+
+    template<typename T>
+    [[nodiscard]] T generate(T left_bound, T right_bound)
+    {
+        RLSU_ASSERT(left_bound  >= min() && left_bound  <= max());
+        RLSU_ASSERT(right_bound >= min() && right_bound <= max());
+        RLSU_ASSERT(left_bound < right_bound);
+
+        double generated = (*this)();
+        generated *= (right_bound - left_bound) / (max() - min());
+        generated += left_bound;
+
+        return static_cast<T>(generated);
+    }
+
 private:
     std::array<int64_t, 3> x_;
     std::array<int64_t, 3> y_;
