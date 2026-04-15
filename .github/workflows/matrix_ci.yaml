@@ -42,6 +42,6 @@ jobs:
 
     - name: Run CTest
       run: |
-        ctest --test-dir build/modules/matrix/tests/correctness/e2e \
+        ctest --test-dir -R "matrix_tester" \
               --build-config ${{ matrix.build_type }} \
               --output-on-failure
