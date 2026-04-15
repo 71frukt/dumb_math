@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtwo_level_test.a CMakeFiles/two_level_test.dir/src/two_level_tester.cpp.o
+/usr/bin/ranlib libtwo_level_test.a

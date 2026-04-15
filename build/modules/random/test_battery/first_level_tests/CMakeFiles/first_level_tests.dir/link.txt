@@ -1,0 +1,2 @@
+/usr/bin/ar qc libfirst_level_tests.a CMakeFiles/first_level_tests.dir/src/disjoint_vectors.cpp.o CMakeFiles/first_level_tests.dir/src/fourier_tester.cpp.o
+/usr/bin/ranlib libfirst_level_tests.a

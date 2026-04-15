@@ -1,0 +1,166 @@
+{
+  "tests": 23,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "LogarithmBoundaryTest\/0",
+      "tests": 7,
+      "testsuite": [
+        {
+          "name": "NegativeArgumentYieldsNaNAndDomainError",
+          "type_param": "float",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 33
+        },
+        {
+          "name": "NegativeInfinityYieldsNaNAndDomainError",
+          "type_param": "float",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 43
+        },
+        {
+          "name": "PositiveZeroYieldsNegativeInfinityAndPoleError",
+          "type_param": "float",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 53
+        },
+        {
+          "name": "NegativeZeroYieldsNegativeInfinityAndPoleError",
+          "type_param": "float",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 64
+        },
+        {
+          "name": "OneYieldsZeroWithoutErrors",
+          "type_param": "float",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 75
+        },
+        {
+          "name": "PositiveInfinityYieldsPositiveInfinity",
+          "type_param": "float",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 86
+        },
+        {
+          "name": "NaNYieldsNaN",
+          "type_param": "float",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 97
+        }
+      ]
+    },
+    {
+      "name": "LogarithmBoundaryTest\/1",
+      "tests": 7,
+      "testsuite": [
+        {
+          "name": "NegativeArgumentYieldsNaNAndDomainError",
+          "type_param": "double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 33
+        },
+        {
+          "name": "NegativeInfinityYieldsNaNAndDomainError",
+          "type_param": "double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 43
+        },
+        {
+          "name": "PositiveZeroYieldsNegativeInfinityAndPoleError",
+          "type_param": "double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 53
+        },
+        {
+          "name": "NegativeZeroYieldsNegativeInfinityAndPoleError",
+          "type_param": "double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 64
+        },
+        {
+          "name": "OneYieldsZeroWithoutErrors",
+          "type_param": "double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 75
+        },
+        {
+          "name": "PositiveInfinityYieldsPositiveInfinity",
+          "type_param": "double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 86
+        },
+        {
+          "name": "NaNYieldsNaN",
+          "type_param": "double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 97
+        }
+      ]
+    },
+    {
+      "name": "LogarithmBoundaryTest\/2",
+      "tests": 7,
+      "testsuite": [
+        {
+          "name": "NegativeArgumentYieldsNaNAndDomainError",
+          "type_param": "long double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 33
+        },
+        {
+          "name": "NegativeInfinityYieldsNaNAndDomainError",
+          "type_param": "long double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 43
+        },
+        {
+          "name": "PositiveZeroYieldsNegativeInfinityAndPoleError",
+          "type_param": "long double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 53
+        },
+        {
+          "name": "NegativeZeroYieldsNegativeInfinityAndPoleError",
+          "type_param": "long double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 64
+        },
+        {
+          "name": "OneYieldsZeroWithoutErrors",
+          "type_param": "long double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 75
+        },
+        {
+          "name": "PositiveInfinityYieldsPositiveInfinity",
+          "type_param": "long double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 86
+        },
+        {
+          "name": "NaNYieldsNaN",
+          "type_param": "long double",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_special.cpp",
+          "line": 97
+        }
+      ]
+    },
+    {
+      "name": "UlpErrorFileIntegrationTest",
+      "tests": 2,
+      "testsuite": [
+        {
+          "name": "Float1toInfErrorBelow3",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_ulp_error.cpp",
+          "line": 46
+        },
+        {
+          "name": "FloatNear1ErrorBelow3",
+          "file": "\/home\/frukt71\/Github\/dumb_math_test\/dumb_math\/modules\/logarithm\/tests\/unit\/src\/test_ulp_error.cpp",
+          "line": 50
+        }
+      ]
+    }
+  ]
+}

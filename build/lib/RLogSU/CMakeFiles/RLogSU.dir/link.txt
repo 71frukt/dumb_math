@@ -1,0 +1,2 @@
+/usr/bin/ar qc libRLogSU.a CMakeFiles/RLogSU.dir/src/graph.cpp.o CMakeFiles/RLogSU.dir/src/logger_impl.cpp.o
+/usr/bin/ranlib libRLogSU.a

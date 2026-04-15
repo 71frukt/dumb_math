@@ -1,0 +1,3 @@
+/home/frukt71/Github/dumb_math_test/dumb_math/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
+/home/frukt71/Github/dumb_math_test/dumb_math/build/_deps/googletest-subbuild/CMakeFiles/edit_cache.dir
+/home/frukt71/Github/dumb_math_test/dumb_math/build/_deps/googletest-subbuild/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,5 @@
+if(EXISTS "/home/frukt71/Github/dumb_math_test/dumb_math/build/modules/random/test_battery/utils/tests/utils_unittests[1]_tests.cmake")
+  include("/home/frukt71/Github/dumb_math_test/dumb_math/build/modules/random/test_battery/utils/tests/utils_unittests[1]_tests.cmake")
+else()
+  add_test(utils_unittests_NOT_BUILT utils_unittests_NOT_BUILT)
+endif()

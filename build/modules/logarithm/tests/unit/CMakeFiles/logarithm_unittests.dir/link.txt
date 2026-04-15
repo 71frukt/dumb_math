@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/logarithm_unittests.dir/src/test_special.cpp.o CMakeFiles/logarithm_unittests.dir/src/test_ulp_error.cpp.o -o logarithm_unittests  /usr/lib/x86_64-linux-gnu/libgmp.so /usr/lib/x86_64-linux-gnu/libmpfr.so ../../../../lib/libgtest_main.a ../../../../lib/RLogSU/libRLogSU.a /usr/lib/x86_64-linux-gnu/libfmt.so.8.1.1 -Wl,--as-needed ../../../../lib/libgtest.a
