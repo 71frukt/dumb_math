@@ -61,13 +61,14 @@ public:
     template<typename T>
     [[nodiscard]] T generate(T left_bound, T right_bound)
     {
-        RLSU_ASSERT(left_bound  >= min() && left_bound  <= max());
-        RLSU_ASSERT(right_bound >= min() && right_bound <= max());
         RLSU_ASSERT(left_bound < right_bound);
 
-        double generated = (*this)();
-        generated *= (right_bound - left_bound) / (max() - min());
-        generated += left_bound;
+        double d_left = static_cast<double>(left_bound);
+        double d_right = static_cast<double>(right_bound);
+
+        double normalized = static_cast<double>((*this)() - min()) / static_cast<double>(max() - min());
+        
+        double generated = d_left + normalized * (d_right - d_left);
 
         return static_cast<T>(generated);
     }

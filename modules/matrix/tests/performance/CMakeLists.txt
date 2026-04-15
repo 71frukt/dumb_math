@@ -9,7 +9,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         assets::config
-
+        common
         matrix
 
         RLogSU
@@ -17,6 +17,8 @@ target_link_libraries(${PROJECT_NAME}
         random
         GTest::gtest_main
 )
+
+add_dependencies(matrix_performance_test generate_test_assets)
 
 set(DATA_DIR "${CMAKE_CURRENT_BINARY_DIR}")
 set(LATENCY_TESTS_DIR "${DATA_DIR}/latency/data")
