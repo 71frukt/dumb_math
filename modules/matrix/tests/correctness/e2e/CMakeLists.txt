@@ -58,6 +58,7 @@ add_dependencies(matrix_tester run_e2e_generator)
 add_dependencies(run_e2e_generator generate_test_assets)
 #====================== /генерация тестов =========================================
 
+include(GoogleTest)
 gtest_discover_tests(matrix_tester
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     DISCOVERY_MODE PRE_TEST
