@@ -24,8 +24,9 @@ RUN apt-get update && apt-get install -y \
     python3-numpy \
     wget \
     && wget https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz \
-    && tar -xzf boost_1_84_0.tar.gz -C ~/ \
-    && rm boost_1_84_0.tar.gz \
+    && tar -xzf boost_1_84_0.tar.gz \
+    && cp -r boost_1_84_0/boost /usr/local/include/ \
+    && rm -rf boost_1_84_0 boost_1_84_0.tar.gz \
     && rm -rf /var/lib/apt/lists/*
 
 LABEL org.opencontainers.image.source="https://github.com/71frukt/dumb_math.git"
