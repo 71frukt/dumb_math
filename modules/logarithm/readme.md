@@ -56,11 +56,11 @@ cmake --build build -j$(nproc)
 ```zsh
 cmake --build build --target generate_plots     
 ```
-*Графики и статистика лежат в `build/source/dumb_math/modules/logarithm/tests/statistics`*
+*Графики и статистика лежат в `build/tests/statistics`*
 
 ### Запуск теста статистики и теста специальных точек на флаги
 ```zsh
-ctest --test-dir build/source/dumb_math/modules/logarithm/tests -V
+ctest --test-dir build/tests -V
 ```
 
 
@@ -130,7 +130,7 @@ $$\ln(x) = \mathtt{exp} \cdot \ln(2) + \ln(x_i) + poly\_approx(r)$$
 Таким образом, для каждого $x_i$ таблица должна хранить точные значения $\frac{1}{x_i}$ и $\ln(x_i)$, и расчёт логарифма произвольного числа $x$ сведется к рассчёту $poly\_approx(r)$.
 
 Сами точные $\frac{1}{x_i}$ и $\ln(x_i)$ рассчитываются единожды при создании библиотеки.
-[*[lookup_table_builder]*](source/dumb_math/modules/logarithm/tools/lookup_table_builder)
+[*[lookup_table_builder]*](tools/lookup_table_builder)
 
 $\ln(x)$ для $x_i \in [1; 2)$ рассчитывается через ряд ареатангенса:
 
@@ -138,14 +138,14 @@ $$x = \frac{1 + z}{1 - z} \implies z = \frac{x - 1}{x + 1} \in [0, \frac{1}{3})$
 $$\ln\\_Arhtan(x) = 2 \sum_{k=0}^{\infty} \frac{1}{2k+1} \left( \frac{x-1}{x+1} \right)^{2k+1}$$
 Аргумент лежит на меньшем полуинтервале, поэтому ряд сходится значительно быстрее, за что приходится платить операциями деления.  
 Алгоритмически ряд считается до тех пор, пока следующий член не перестанет влиять на сумму. Фактически это означает, что член ряда по значению меньше ULP, сумма ряда имеет максимальную для этого метода точность.
-[*[approx.hpp - LnArtgTaylorBestAcc_0to2(T x)]*](source/dumb_math/modules/logarithm/include/logarithm/common/approx.hpp)
+[*[approx.hpp - LnArtgTaylorBestAcc_0to2(T x)]*](include/logarithm/common/approx.hpp)
 
 * #### Рассчёт полиномиальной аппроксимации
-Полином рассчитывается через ряд Тейлора порядка, зависящего от точности типа *T*. В коэффициентах ряда Тейлора также есть константные дроби, которые предрассчитываются в compile-time. [*[tailor.hpp]*](source/dumb_math/modules/logarithm/include/logarithm//tailor.hpp)
+Полином рассчитывается через ряд Тейлора порядка, зависящего от точности типа *T*. В коэффициентах ряда Тейлора также есть константные дроби, которые предрассчитываются в compile-time. [*[tailor.hpp]*](include/logarithm//tailor.hpp)
 
 * #### Катастрофическая потеря точности в окрестности 1
 В окрестности единицы происходит вычитание между табличным значением $\ln(x_i)$ и суммой ряда Тейлора, которые крайне близки по значению, что, как известно, приводит к катастрофической потере точности, поэтому в окрестности 1 расчёт ведется с помощью ряда ареатангенса определенного порядка.
-[*[approx.hpp -  LnArtgTaylor_0to2(T x))]*](source/dumb_math/modules/logarithm/include/logarithm/common/approx.hpp)
+[*[approx.hpp -  LnArtgTaylor_0to2(T x))]*](include/logarithm/common/approx.hpp)
 
 
 ### Реконструкция результата
@@ -158,12 +158,12 @@ $$\ln(x) = LnArtanh(x), |x - 1| <= 0.15$$
 
 * Сбор статистики ошибок  
 Произвольный дробный тип T разбивается на отрезки по значению экспоненты. На каждом отрезке выбирается $M$ точек, в которых результат `dumb_math::logarithm::ln(x)` сравнивается с эталоном. Также отдельно рассчитывается ошибка 2000 ближайших к 1.0 точек.
-[*[tests]*](source/dumb_math/modules/logarithm/tests)
+[*[tests]*](tests)
 
 * Unit тесты
-    * Проверяется, что статистика соответствует требованиям к функции [*[test_ulp_error.cpp]*](source/dumb_math/modules/logarithm/tests/unit/src/test_ulp_error.cpp)
+    * Проверяется, что статистика соответствует требованиям к функции [*[test_ulp_error.cpp]*](tests/unit/src/test_ulp_error.cpp)
 
-    * Проверяются специальные точки (согласно спецификации IEEE 754 и POSIX) [*[test_special.cpp]*](source/dumb_math/modules/logarithm/tests/unit/src/test_special.cpp)
+    * Проверяются специальные точки (согласно спецификации IEEE 754 и POSIX) [*[test_special.cpp]*](tests/unit/src/test_special.cpp)
 
     | Аргумент $x$ | Возвращаемое значение | `errno` | Флаг FPU | Описание |
     | :--- | :--- | :--- | :--- | :--- |
