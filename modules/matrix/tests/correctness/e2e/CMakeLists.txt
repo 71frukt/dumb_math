@@ -30,7 +30,10 @@ target_compile_definitions(matrix_test_dependencies
         "TASKS_DIR=\"${TASKS_DIR}\""
         "CUR_SOURCE_DIR=\"${CUR_SOURCE_DIR}\""
 )
-target_link_libraries(generator PRIVATE matrix_test_dependencies)
+target_link_libraries(generator
+    PRIVATE
+        matrix_test_dependencies
+)
 
 target_link_libraries(matrix_tester
     PRIVATE
@@ -51,8 +54,8 @@ add_custom_command(
 add_custom_target(run_e2e_generator
     DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/e2e_tests_generated.stamp"
 )
-
 add_dependencies(matrix_tester run_e2e_generator)
+add_dependencies(run_e2e_generator generate_test_assets)
 #====================== /генерация тестов =========================================
 
 gtest_discover_tests(matrix_tester)

@@ -1,0 +1,2 @@
+../../assets/rectangle/9x3/0.txt
+../../assets/square/3x3/0.txt

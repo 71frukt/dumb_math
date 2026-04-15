@@ -69,6 +69,7 @@ target_include_directories(dumb_math_common INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
+
 #================= private ===============================
 add_library(dumb_math_internal INTERFACE)
 target_include_directories(dumb_math_internal INTERFACE
