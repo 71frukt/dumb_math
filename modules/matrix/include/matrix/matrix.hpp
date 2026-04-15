@@ -40,7 +40,7 @@ public:
 private:
     size_t rows_;
     size_t cols_;
-
+ 
     // std::vector<float> data_;
     std::vector<float, detail::AlignedAllocator<float, 64>> data_;
 
