@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '.github/Dockerfile'
-      - '.github/workflows/docker-build.yaml'
+      - '.github/workflows/docker-build.yml'
 
 jobs:
   docker:
