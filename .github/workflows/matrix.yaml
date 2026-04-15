@@ -39,6 +39,6 @@ jobs:
 
     - name: Run CTest
       run: |
-        ctest --test-dir build/dumb_math/modules/matrix/tests/correctness/e2e \
+        ctest --test-dir build/modules/matrix/tests/correctness/e2e \
               --build-config ${{ matrix.build_type }} \
               --output-on-failure
