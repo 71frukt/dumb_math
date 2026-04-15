@@ -37,11 +37,8 @@ jobs:
       run: |
         cmake --build build -j $(nproc)
 
-    - name: Debug executable crash
-      run: ./build/modules/matrix/tests/correctness/e2e/matrix_tester --gtest_list_tests
-
     - name: Run CTest
       run: |
-        ctest --test-dir -R "matrix_tester" \
+        ctest --test-dir build -R "matrix_tester" \
               --build-config ${{ matrix.build_type }} \
               --output-on-failure
