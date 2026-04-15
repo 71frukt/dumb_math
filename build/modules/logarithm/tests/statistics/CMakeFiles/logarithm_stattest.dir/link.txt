@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/logarithm_stattest.dir/src/main.cpp.o -o logarithm_stattest  ../../../../lib/RLogSU/libRLogSU.a ../../../../lib/RLogSU/libRLogSU.a /usr/lib/x86_64-linux-gnu/libfmt.so.8.1.1 -Wl,--as-needed /usr/lib/x86_64-linux-gnu/libgmp.so /usr/lib/x86_64-linux-gnu/libmpfr.so

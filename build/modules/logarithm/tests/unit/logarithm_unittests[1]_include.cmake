@@ -1,5 +1,0 @@
-if(EXISTS "/home/frukt71/Github/dumb_math_test/dumb_math/build/modules/logarithm/tests/unit/logarithm_unittests[1]_tests.cmake")
-  include("/home/frukt71/Github/dumb_math_test/dumb_math/build/modules/logarithm/tests/unit/logarithm_unittests[1]_tests.cmake")
-else()
-  add_test(logarithm_unittests_NOT_BUILT logarithm_unittests_NOT_BUILT)
-endif()

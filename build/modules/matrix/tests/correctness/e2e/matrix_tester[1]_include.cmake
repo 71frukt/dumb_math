@@ -1,5 +1,0 @@
-if(EXISTS "/home/frukt71/Github/dumb_math_test/dumb_math/build/modules/matrix/tests/correctness/e2e/matrix_tester[1]_tests.cmake")
-  include("/home/frukt71/Github/dumb_math_test/dumb_math/build/modules/matrix/tests/correctness/e2e/matrix_tester[1]_tests.cmake")
-else()
-  add_test(matrix_tester_NOT_BUILT matrix_tester_NOT_BUILT)
-endif()
