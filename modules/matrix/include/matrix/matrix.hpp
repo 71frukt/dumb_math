@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <vector>
 
-#include "matrix/detail/matrix_data_allocator.h"
+#include "detail/matrix_data_allocator.hpp"
 
 namespace dumb_math::matrix {
 
@@ -14,7 +14,8 @@ public:
     Matrix(size_t rows, size_t cols)
         : rows_(rows)
         , cols_(cols)
-        , data_(rows * cols)
+        , stride_((cols + 15) & ~static_cast<size_t>(15)) 
+        , data_(rows_ * stride_)
     {}
 
 public:
@@ -22,25 +23,27 @@ public:
 
     __attribute__((always_inline)) inline float& operator[](size_t i, size_t j) noexcept
     {
-        return data_[i * cols_ + j];
+        return data_[i * stride_ + j];
     }
 
     __attribute__((always_inline)) inline float operator[](size_t i, size_t j) const noexcept
     {
-        return data_[i * cols_ + j];
+        return data_[i * stride_ + j];
     }
 
     float& at(size_t i, size_t j);
     float  at(size_t i, size_t j) const;
 
 public:
-    size_t rows() const noexcept { return rows_; }
-    size_t cols() const noexcept { return cols_; }
-    
+    size_t rows  () const noexcept { return rows_; }
+    size_t cols  () const noexcept { return cols_; }
+    size_t stride() const noexcept { return stride_; }
+
 private:
     size_t rows_;
     size_t cols_;
- 
+    size_t stride_;
+
     // std::vector<float> data_;
     std::vector<float, detail::AlignedAllocator<float, 64>> data_;
 

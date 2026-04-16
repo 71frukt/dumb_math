@@ -18,6 +18,10 @@ target_include_directories(${PROJECT_NAME}
 #-------------------- AVX512 ----------------------------------------
 target_compile_options(${PROJECT_NAME} PRIVATE -march=native)
 
+# target_compile_options(${PROJECT_NAME} PRIVATE
+#     $<$<CONFIG:Release>:-O2>
+# )
+
 #================= Tests =============================================
 option(MATRIX_BUILD_TESTING "Build MATRIX tests" ON)
 

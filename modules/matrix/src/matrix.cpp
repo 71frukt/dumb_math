@@ -31,12 +31,12 @@ bool Matrix::operator==(const Matrix& other) const noexcept
 
 float& Matrix::at(size_t i, size_t j)
 {
-    return data_.at(i * cols_ + j);
+    return data_.at(i * stride_ + j);
 }
 
 float Matrix::at(size_t i, size_t j) const
 {
-    return data_.at(i * cols_ + j);
+    return data_.at(i * stride_ + j);
 }
 
 
@@ -70,9 +70,9 @@ void Matrix::DumbMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& mat
 {
     AssertMatixMulConsistency_(matrix1, matrix2, matrix_dest);
     
-    for (size_t row = 0; row < matrix_dest.rows(); row++)
+    for (size_t col = 0; col < matrix_dest.cols(); col++)
     {
-        for (size_t col = 0; col < matrix_dest.cols(); col++)
+        for (size_t row = 0; row < matrix_dest.rows(); row++)
         {
             matrix_dest[row, col] = LineMulCol(matrix1, matrix2, row, col);
         }
@@ -105,9 +105,9 @@ void Matrix::DumbMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& mat
 void Matrix::OptMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matrix_dest)
 {
 
-    const float* const m1_data = matrix1 .data_.data();
-    const float* const m2_data = matrix2 .data_.data();
-          float* const dest_data     = matrix_dest.data_.data();
+    const float* const m1_data   = matrix1    .data_.data();
+    const float* const m2_data   = matrix2    .data_.data();
+          float* const dest_data = matrix_dest.data_.data();
 
     RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m1_data )  % 64) == 0 && "matrix1 is NOT 64-byte aligned!");
     RLSU_ASSERT((reinterpret_cast<std::uintptr_t>(m2_data )  % 64) == 0 && "matrix2 is NOT 64-byte aligned!");
@@ -125,11 +125,11 @@ void Matrix::OptMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matr
     {
         for (size_t i = 0; i < matrix1.cols(); i++)
         {
-            float matrix1_val = m1_carr[row * matrix1.cols() + i];
+            float matrix1_val = m1_carr[row * matrix1.stride() + i];
     
             for (size_t col = 0; col < matrix2.cols(); col++)
             {
-                dest_carr[row * matrix_dest.cols() + col] += matrix1_val * m2_carr[i * matrix2.cols() + col];
+                dest_carr[row * matrix_dest.stride() + col] += matrix1_val * m2_carr[i * matrix2.stride() + col];
             }
         }
 
@@ -160,15 +160,19 @@ void Matrix::OptMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& matr
     const size_t m2_cols   = matrix2.cols();
     const size_t dest_cols = matrix_dest.cols();
 
+    const size_t m1_stride   = matrix1.stride();
+    const size_t m2_stride   = matrix2.stride();
+    const size_t dest_stride = matrix_dest.stride();
+
     for (size_t row = 0; row < m1_rows; row++)
     {
         for (size_t i = 0; i < m1_cols; i++)
         {
-            float matrix1_val = m1_carr[row * m1_cols + i];
+            float matrix1_val = m1_carr[row * m1_stride + i];
             
             for (size_t col = 0; col < m2_cols; col++)
             {
-                dest_carr[row * dest_cols + col] += matrix1_val * m2_carr[i * m2_cols + col];
+                dest_carr[row * dest_stride + col] += matrix1_val * m2_carr[i * m2_stride + col];
             }
         }
     }
@@ -196,6 +200,10 @@ void Matrix::BlockMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& ma
     const size_t m2_cols   = matrix2    .cols();
     const size_t dest_cols = matrix_dest.cols();
 
+    const size_t m1_stride   = matrix1.stride();
+    const size_t m2_stride   = matrix2.stride();
+    const size_t dest_stride = matrix_dest.stride();
+
     const size_t block_size = 64;
 
     //---------------------------- blocks - dumb mul for remains ---------------------------------------------
@@ -212,13 +220,13 @@ void Matrix::BlockMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& ma
             {
                 for (size_t row = row_blk; row < row_blk + block_size; ++row)
                 {
-                    const size_t dest_row_offset = row * dest_cols;
-                    const size_t m1_row_offset   = row * m1_cols;
+                    const size_t dest_row_offset = row * dest_stride;
+                    const size_t m1_row_offset   = row * m1_stride;
 
                     for (size_t i = i_blk; i < i_blk + block_size; ++i)
                     {
                         const float matrix1_val = m1_carr[m1_row_offset + i];
-                        const size_t m2_row_offset = i * m2_cols;
+                        const size_t m2_row_offset = i * m2_stride;
 
                         for (size_t col = col_blk; col < col_blk + block_size; ++col)
                         {
@@ -256,13 +264,13 @@ void Matrix::BlockMul0_(const Matrix& matrix1, const Matrix& matrix2, Matrix& ma
 
                 for (size_t row = row_blk; row < row_end; row++)
                 {
-                    const size_t dest_row_offset = row * dest_cols;
-                    const size_t m1_row_offset   = row * m1_cols;
+                    const size_t dest_row_offset = row * dest_stride;
+                    const size_t m1_row_offset   = row * m1_stride;
 
                     for (size_t i = i_blk; i < i_end; i++)
                     {
                         const float matrix1_val = m1_carr[m1_row_offset + i];
-                        const size_t m2_row_offset = i * m2_cols;
+                        const size_t m2_row_offset = i * m2_stride;
 
                         for (size_t col = col_blk; col < col_end; col++)
                         {
@@ -294,6 +302,10 @@ void Matrix::BlockMulAvx256_(const Matrix& matrix1, const Matrix& matrix2, Matri
     const size_t m2_cols   = matrix2.cols();
     const size_t dest_cols = matrix_dest.cols();
 
+    const size_t m1_stride   = matrix1.stride();
+    const size_t m2_stride   = matrix2.stride();
+    const size_t dest_stride = matrix_dest.stride();
+
     const size_t BLOCK = 64; 
 
     // массив индексов для динамической генерации маски хвостов
@@ -314,8 +326,8 @@ void Matrix::BlockMulAvx256_(const Matrix& matrix1, const Matrix& matrix2, Matri
 
                 for (size_t row = row_blk; row < row_end; ++row)
                 {
-                    const size_t dest_row_offset = row * dest_cols;
-                    const size_t m1_row_offset   = row * m1_cols;
+                    const size_t dest_row_offset = row * dest_stride;
+                    const size_t m1_row_offset   = row * m1_stride;
 
                     for (size_t col = col_blk; col < col_end; col += 8)
                     {
@@ -328,7 +340,7 @@ void Matrix::BlockMulAvx256_(const Matrix& matrix1, const Matrix& matrix2, Matri
                             for (size_t i = i_blk; i < i_end; ++i)
                             {
                                 __m256 v_m1 = _mm256_set1_ps(m1_carr[m1_row_offset + i]);
-                                __m256 v_m2 = _mm256_loadu_ps(&m2_carr[i * m2_cols + col]);
+                                __m256 v_m2 = _mm256_loadu_ps(&m2_carr[i * m2_stride + col]);
 
                                 v_dest = _mm256_fmadd_ps(v_m1, v_m2, v_dest);
                             }
@@ -354,7 +366,7 @@ void Matrix::BlockMulAvx256_(const Matrix& matrix1, const Matrix& matrix2, Matri
                             {
                                 __m256 v_m1 = _mm256_set1_ps(m1_carr[m1_row_offset + i]);
                                 // чтение m2 по маске
-                                __m256 v_m2 = _mm256_maskload_ps(&m2_carr[i * m2_cols + col], mask);
+                                __m256 v_m2 = _mm256_maskload_ps(&m2_carr[i * m2_stride + col], mask);
                                 
                                 v_dest = _mm256_fmadd_ps(v_m1, v_m2, v_dest);
                             }
