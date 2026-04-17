@@ -15,4 +15,4 @@
 #include "matrix/matrix.hpp"
 
 #include "benchmarking/common.hpp"
-#include "benchmarking/latency_test.hpp"
+#include "benchmarking/benchmarking.hpp"

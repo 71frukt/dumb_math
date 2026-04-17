@@ -10,7 +10,7 @@
 
 #include "RLogSU/logger.hpp"
 #include "benchmarking/common.hpp"
-#include "benchmarking/latency_test.hpp" 
+#include "benchmarking/benchmarking.hpp" 
 #include "matrix/matrix.hpp"
 #include "assets/config.hpp"
 #include "common/matrix_iostream.hpp"

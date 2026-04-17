@@ -10,7 +10,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ~/boost_1_84_0)
+target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ~/boost_1_84_0)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     utils

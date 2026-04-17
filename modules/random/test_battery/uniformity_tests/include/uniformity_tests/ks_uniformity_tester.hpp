@@ -23,8 +23,8 @@ public:
 
         for (size_t j = 1; j <= n; ++j)
         {
-            double d_plus  = (static_cast<double>(j) / n) - u_values[j - 1];
-            double d_minus = u_values[j - 1] - (static_cast<double>(j - 1) / n);
+            double d_plus  = (static_cast<double>(j) / static_cast<double>(n)) - u_values[j - 1];
+            double d_minus = u_values[j - 1] - (static_cast<double>(j - 1) / static_cast<double>(n));
             d_max = std::max({d_max, d_plus, d_minus});
         }
 

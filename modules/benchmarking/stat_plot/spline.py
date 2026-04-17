@@ -109,7 +109,7 @@ def main():
             plt.plot(x, average, '-', color=color, label=f"{func_name} (< 4 points)", zorder=2)
 
     plt.xlabel('N')
-    plt.ylabel('Latency')
+    plt.ylabel('')
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.legend()
 
