@@ -64,7 +64,8 @@ ResultT TestThroughput(Func&& testing_func, const size_t buckets_num    = 100,
 Если тестирование производится с целью определения асимптотики функции, то результаты тестов можно сложить в массив и направить в функцию
 
 ```cpp
-void ExportResultsToCSV(std::string curve_name, const std::vector<std::pair<double, ResultT>>& data, const std::string& filename);
+void ExportResultsToCSV(std::string curve_name, const std::vector<std::pair<double, ResultT>>& data,
+                        const std::string& filename);
 ```
 
 которая создает `.csv` файл. Скрипт [stat_plot/spline.py](stat_plot/spline.py) считывает переданные ему `.csv` файлы и строит график, аппроксимирующий точки кубическим многочленом (примеры графиков приведены в начале ридми). 
