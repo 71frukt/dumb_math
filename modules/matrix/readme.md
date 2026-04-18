@@ -83,7 +83,7 @@ void Matrix::DumbMul1_(const Matrix& matrix1, const Matrix& matrix2, Matrix& mat
 
 </details>
 
-В этой реализации во внутреннем цикле обе марицы - $\texttt{matrix2[i, col]}$ и $\texttt{matrix\\_dest[row, col]}$ - обходятся последовательно. Также $\texttt{matrix1\\_val} = \texttt{matrix1[row, i]}$ загружается единственный раз для всей строки $\texttt{matrix\\_dest}$.
+В этой реализации во внутреннем цикле обе марицы - `matrix2[i, col]` `matrix2[i, col]` и `matrix_dest[row, col]` - обходятся последовательно. Также `matrix1_val = matrix1[row, i]` загружается единственный раз для всей строки `matrix_dest`.
 
 
 ### Третья оптимизация - выравнивание строк матриц в памяти по 64 байта
