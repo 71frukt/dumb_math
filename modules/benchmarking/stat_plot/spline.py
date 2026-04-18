@@ -114,7 +114,7 @@ def main():
     plt.legend()
 
     # 4. Сохранение основного (полного) графика
-    plt.title('Matrix mul funcs testing (Full)')
+    plt.title('Full testing interval')
     if global_max_x > 0:
         plt.xlim(left=0, right=global_max_x * 1.05)
         plt.ylim(bottom=0, top=global_max_y * 1.05)
@@ -149,7 +149,7 @@ def main():
         if margin_y == 0: 
             margin_y = local_max_y * 0.05 if local_max_y != 0 else 1
             
-        plt.title(f'Matrix mul funcs testing (Interval N: {int(x_start)} - {int(x_end)})')
+        plt.title(f'Testing interval N: {int(x_start)} - {int(x_end)}')
         
         plt.xlim(left=x_start - margin_x, right=x_end + margin_x)
         plt.ylim(bottom=local_min_y - margin_y, top=local_max_y + margin_y)
