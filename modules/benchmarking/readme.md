@@ -9,7 +9,7 @@
       <br>
     </td>
     <td width="44%" align="center">
-      <img src="../../.github/readme_assets/benchmarking/throwhgput_full.png" alt="Throwhgput test" style="width:100%;">
+      <img src="../../.github/readme_assets/benchmarking/throuhgput_full.png" alt="Throuhgput test" style="width:100%;">
       <br>
     </td>
   </tr>
@@ -22,8 +22,8 @@
       <br>
     </td>
     <td width="44%" align="center">
-      <img src="../../.github/readme_assets/benchmarking/throwhgput_1.png" alt="Throwhgput test" style="width:100%;">
-      <em>Throwhgput test</em>
+      <img src="../../.github/readme_assets/benchmarking/throuhgput_1.png" alt="Throuhgput test" style="width:100%;">
+      <em>Throuhgput test</em>
       <br>
     </td>
   </tr>
@@ -33,8 +33,8 @@
 Полный пример использования находится в папке [usage](usage).
 
 
-Рекомендуется производить тестирование  в режиме сборки `Release`, а также подготовть компьютер:  
-* установть режим производительности `performance` - предлагается использовать скрипт [set_performance](env_setup/set_performance.sh) для установки режима и [restore_cpu_state](env_setup/restore_cpu_state.sh) для сброса.
+Рекомендуется производить тестирование  в режиме сборки `Release`, а также подготовить компьютер:  
+* установить режим производительности `performance` - предлагается использовать скрипт [set_performance](env_setup/set_performance.sh) для установки режима и [restore_cpu_state](env_setup/restore_cpu_state.sh) для сброса.
 * запускать программу с жесткой привязкой к одному ядру, выдав максимальный приоритет. *[запускать через [run_max_priority](env_setup/run_max_priority.sh)]*
 
 Единичный замер производится функциями `TestLatency` и `TestThroughput`, имеющими следующий интерфейс:
@@ -61,7 +61,7 @@ ResultT TestThroughput(Func&& testing_func, const size_t buckets_num    = 100,
 
 Параметры по умолчанию настраивают механизм теста, о котором будет сказано позже. 
 
-Если тестирование производится с целью определения асимптотики функции, то результаты тестов можно скложить в массив и направить в фукнцию
+Если тестирование производится с целью определения асимптотики функции, то результаты тестов можно сложить в массив и направить в функцию
 
 ```cpp
 void ExportResultsToCSV(std::string curve_name, const std::vector<std::pair<double, ResultT>>& data, const std::string& filename);
@@ -75,4 +75,4 @@ void ExportResultsToCSV(std::string curve_name, const std::vector<std::pair<doub
 * Каждый бакет содержит `buckets_size` тестов.  
 * Каждый тест запускает переданную аргументом функцию `test_size` раз.
 
-Для каждого бакета выбирается тест, прошедший за минимальное время. Фактически, при правильно настроенном запуске тестов истинное значение времени работы функции (будь то latency или throwghput) из-за накладных расходов точно будет меньше или равно тому, что мы измерим. Из всех минимумов по бакетам выкидывается `emissions_part` выбросов с максимальным результатом. Для итогового массива минимумов рассчитывается среднее и дисперсия.
+Для каждого бакета выбирается тест, прошедший за минимальное время. Фактически, при правильно настроенном запуске тестов истинное значение времени работы функции (будь то latency или throwghput) из-за накладных расходов точно будет меньше или равно тому, что мы измерим. Из всех минимумов по бакетам выкидывается `emissions_part` выбросов с максимальным результатом. Для итогового массива минимумов рассчитывается среднее и стандартное отклонение.
