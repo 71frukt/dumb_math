@@ -11,4 +11,4 @@ float logf(float x);
 }
 #endif
 
-#endif // CLOGF_H
+#endif // CLOGF_H 
