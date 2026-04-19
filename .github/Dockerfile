@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     git \
-    libfmt-dev \
+    # libfmt-dev \
     libmpfr-dev \
     libgmp-dev \
     graphviz \
