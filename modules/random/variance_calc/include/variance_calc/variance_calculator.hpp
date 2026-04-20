@@ -65,8 +65,8 @@ auto OnePass(const std::vector<T>& data)
 
     for (size_t i = 1; i < data.size(); ++i)
     {
-        m_cur   = m_prev  + ( data[i] - m_prev) / (i + 1);
-        dx_cur  = dx_prev + ((data[i] - m_prev) * (data[i] - m_cur) - dx_prev) / (i + 1);
+        m_cur   = m_prev  + ( data[i] - m_prev) / static_cast<T>(i + 1);
+        dx_cur  = dx_prev + ((data[i] - m_prev) * (data[i] - m_cur) - dx_prev) / static_cast<T>(i + 1);
         
         m_prev  = m_cur;
         dx_prev = dx_cur;

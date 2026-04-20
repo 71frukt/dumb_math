@@ -15,6 +15,13 @@ target_include_directories(${PROJECT_NAME}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
+#-------------------- AVX512 ----------------------------------------
+target_compile_options(${PROJECT_NAME} PRIVATE -march=native)
+
+# target_compile_options(${PROJECT_NAME} PRIVATE
+#     $<$<CONFIG:Release>:-O2>
+# )
+
 #================= Tests =============================================
 option(MATRIX_BUILD_TESTING "Build MATRIX tests" ON)
 

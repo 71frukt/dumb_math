@@ -8,20 +8,26 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+        assets::config
+        common
         matrix
 
         RLogSU
         benchmarking
+        random
         GTest::gtest_main
 )
 
+add_dependencies(matrix_performance_test generate_test_assets)
+
 set(DATA_DIR "${CMAKE_CURRENT_BINARY_DIR}")
-set(LATENCY_TESTS_DIR "${DATA_DIR}/latency")
-set(LATENCY_PLOT_FILE "${LATENCY_TESTS_DIR}/latency_plot.png")
+set(LATENCY_TESTS_DIR "${DATA_DIR}/latency/data")
+set(LATENCY_PLOT_DIR  "${DATA_DIR}/latency/plots")
 
 file(MAKE_DIRECTORY "${LATENCY_TESTS_DIR}")
+file(MAKE_DIRECTORY "${LATENCY_PLOT_DIR}" )
 
-set(PERFORMANCE_TEST_TIME_LIMIT_S 3)
+set(PERFORMANCE_TEST_TIME_LIMIT_S 20)
 
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE
@@ -49,9 +55,7 @@ set_tests_properties(RunMatrixPerfTest PROPERTIES FIXTURES_REQUIRED MatrixPerfFi
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 add_test(NAME PlotMatrixLatency 
-         COMMAND Python3::Interpreter ${BENCHMARKING_STAT_PLOT_DIR}/spline.py 
-                 ${LATENCY_TESTS_DIR}/OptMul1.csv 
-                 ${LATENCY_PLOT_FILE})
+         COMMAND bash -c "${Python3_EXECUTABLE} ${BENCHMARKING_STAT_PLOT_DIR}/spline.py ${LATENCY_PLOT_DIR} ${LATENCY_TESTS_DIR}/*.csv")
 
 set_tests_properties(PlotMatrixLatency PROPERTIES 
                      DEPENDS RunMatrixPerfTest

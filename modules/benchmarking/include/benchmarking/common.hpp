@@ -25,9 +25,16 @@ void ExportResultsToCSV(std::string curve_name, const std::vector<std::pair<doub
 namespace detail {
     
 template <class T>
-__attribute__((always_inline)) inline void DoNotOptimize(const T& value)
+__attribute__((always_inline)) inline void DoNotOptimizeLatency(const T& value)
 {
     asm volatile("" : : "r,m"(value) : "memory");
+    _mm_lfence();
+}
+
+template <class T>
+__attribute__((always_inline)) inline void DoNotOptimizeThroughput(const T& value)
+{
+    asm volatile("" : : "r,m"(value));
 }
 
 __attribute__((always_inline)) inline void ClobberMemory()
@@ -36,17 +43,31 @@ __attribute__((always_inline)) inline void ClobberMemory()
 }
 
 template <typename Func>
-__attribute__((always_inline)) inline void RunAndProtect(Func&& f)
+__attribute__((always_inline)) inline void RunAndProtectLatency(Func&& f)
 {
     if constexpr (std::is_void_v<std::invoke_result_t<Func>>)
     {
         f();
         ClobberMemory();
+        _mm_lfence();
     }
     
     else
     {
-        DoNotOptimize(f());
+        DoNotOptimizeLatency(f());
+    }
+}
+
+template <typename Func>
+__attribute__((always_inline)) inline void RunAndProtectThroughput(Func&& f)
+{
+    if constexpr (std::is_void_v<std::invoke_result_t<Func>>)
+    {
+        f();
+    }
+    else
+    {
+        DoNotOptimizeThroughput(f());
     }
 }
 

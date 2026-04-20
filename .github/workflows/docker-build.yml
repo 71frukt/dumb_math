@@ -2,10 +2,9 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches:
-      - main
     paths:
-      - '.github/Dockerfile'    # от корня
+      - '.github/Dockerfile'
+      - '.github/workflows/docker-build.yml'
 
 jobs:
   docker:

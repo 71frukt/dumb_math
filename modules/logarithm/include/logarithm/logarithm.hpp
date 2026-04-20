@@ -64,6 +64,6 @@ T ln(T x)
     T ln_x = exponenta * ln2 + LookupTable[table_index].ln_x + TailorLn<TailorDeg>(v);
 
     return ln_x;
-}
+} 
 
 } // namespace dumb_math::logarithm

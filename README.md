@@ -1,5 +1,4 @@
-# drugoe_nazvanie-numerical-methods
-Домашние задания по курсу "Численные методы", 4 семестр
+# dumb_math
 Шелонин Арсений, Б01-411, 2 курс ФРКТ
 
 
@@ -16,7 +15,7 @@
 
 
 ### Установка зависимомтей на Ubuntu
-* libfmt
+* libfmt (устанавливается при сборке через FetchContent)
 ```zsh
 sudo apt install libfmt-dev
 ```
@@ -36,5 +35,5 @@ tar -xzf boost_1_84_0.tar.gz -C ~/
 ## Установка
 
 ```zsh
-git clone --recurcive https://github.com/71frukt/drugoe_nazvanie-numerical-methods.git
+git clone https://github.com/71frukt/drugoe_nazvanie-numerical-methods.git
 ```

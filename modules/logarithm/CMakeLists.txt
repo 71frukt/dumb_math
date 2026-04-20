@@ -47,3 +47,8 @@ option(LN_BUILD_TESTING "Build ln tests" ON)
 if(LN_BUILD_TESTING)
     add_subdirectory(tests)
 endif()
+
+
+
+#========================== clogf ====================================
+add_subdirectory(clogf)

@@ -9,20 +9,24 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(RLogSU QUIET)
 
 if(NOT RLogSU_FOUND)
-    message(STATUS "RLogSU was not found in the system. We use a local copy in lib/RLogSU (or download it if it is not available)...")
-    
-    include(FetchContent)
-    FetchContent_Declare(
-        RLogSU
-        GIT_REPOSITORY https://github.com/71frukt/RLogSU.git
-        GIT_TAG        main
-        SOURCE_DIR     ${CMAKE_CURRENT_SOURCE_DIR}/lib/RLogSU
-    )
+    # Проверяем, есть ли уже локальная копия В ФАЙЛОВОЙ СИСТЕМЕ
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/lib/RLogSU/CMakeLists.txt)
+        message(STATUS "Using local RLogSU from lib/RLogSU")
+        add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/RLogSU)
 
-    # add_subdirectory тут автоматически
-    FetchContent_MakeAvailable(RLogSU)
+    else()
+        message(STATUS "Downloading RLogSU from GitHub...")
+        include(FetchContent)
+        FetchContent_Declare(
+            RLogSU
+            GIT_REPOSITORY https://github.com/71frukt/RLogSU.git
+            GIT_TAG        main
+        )
+        FetchContent_MakeAvailable(RLogSU)
+    endif()
+    
 else()
-    message(STATUS "is found in the system, using the system version.")
+    message(STATUS "RLogSU found in system, using system version.")
 endif()
 ###=========================================== /DEPENDENCIES-RLogSU =========================================
  
@@ -64,6 +68,7 @@ add_library(dumb_math_common INTERFACE)
 target_include_directories(dumb_math_common INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
+
 
 #================= private ===============================
 add_library(dumb_math_internal INTERFACE)
