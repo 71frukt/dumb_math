@@ -8,6 +8,7 @@ add_library(rng_test_battery STATIC
 
 target_link_libraries(rng_test_battery PUBLIC
     utils
+    RLogSU
 )
 
 target_include_directories(rng_test_battery PUBLIC
