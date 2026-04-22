@@ -1,21 +1,16 @@
-add_subdirectory(generators/rnd_bit_generators)
-add_subdirectory(generators/rnd_normal_generator)
-add_subdirectory(generators/chi_sq_generator)
-add_subdirectory(generators/bivariate_normal_generator)
-add_subdirectory(generators/rng_parallelizer)
-
-add_subdirectory(test_battery)
+add_subdirectory(rng_parallelizer)
+add_subdirectory(rng_test_battery)
+add_subdirectory(engines)
+add_subdirectory(distributions)
 add_subdirectory(variance_calc)
 
 add_library(random INTERFACE)
+add_library(dumb_math::random ALIAS random)
 
 target_link_libraries(random INTERFACE
-    rnd_bit_generators
-    rnd_normal_generator
-    chi_sq_generator
-    bivariate_normal_generator
     rng_parallelizer
-
-    test_battery
-    random::variance_calc
+    rng_test_battery
+    engines
+    distributions
+    variance_calc
 )

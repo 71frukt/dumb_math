@@ -79,9 +79,9 @@ target_include_directories(dumb_math_internal INTERFACE
 )
 
 #========================================= MODULES ====================================================
+add_subdirectory(modules/random)
 add_subdirectory(modules/benchmarking)
 add_subdirectory(modules/logarithm)
-add_subdirectory(modules/random)
 add_subdirectory(modules/matrix)
 #========================================= /MODULES ===================================================
 
@@ -91,9 +91,9 @@ target_link_libraries(${PROJECT_NAME}
     INTERFACE
         dumb_math_common
         
+        random
         benchmarking
         logarithm
-        random
         matrix
 )
 

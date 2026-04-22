@@ -8,6 +8,7 @@ target_link_libraries(common
 
         matrix
         random
+        RLogSU
 )
 
 target_include_directories(common INTERFACE

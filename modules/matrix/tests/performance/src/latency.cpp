@@ -15,7 +15,6 @@
 #include "assets/config.hpp"
 #include "common/matrix_iostream.hpp"
 
-#include "rnd_bit_generators/mrg32k3a.hpp"
 
 #ifndef LATENCY_TESTS_DIR
 #define LATENCY_TESTS_DIR "."
