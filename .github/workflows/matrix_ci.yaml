@@ -42,3 +42,4 @@ jobs:
         ctest --test-dir build -R "matrix_tester" \
               --build-config ${{ matrix.build_type }} \
               --output-on-failure
+              
