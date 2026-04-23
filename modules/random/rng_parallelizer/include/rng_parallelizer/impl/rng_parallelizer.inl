@@ -15,7 +15,7 @@ template <typename RngType, typename TaskFunc>
 requires requires(TaskFunc task, RngType& rng, uint64_t count) {
     { task(rng, count) } -> std::default_initializable;
 }
-auto RngParallelRun(uint64_t total_elements, uint32_t seed, TaskFunc task, int rt_priority = 0)
+auto RngParallelRun(uint64_t total_elements, uint32_t seed, TaskFunc task, int rt_priority)
 {
     std::vector<int> target_cores = detail::GetPhysicalPCores();
     RLSU_INFO("target_cores (pcores) = {}", target_cores);
