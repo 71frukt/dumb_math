@@ -20,4 +20,4 @@ fi
 shift 2
 
 # задает максимальный RT приоритет с жесткой привязкой к ядру через taskset
-chrt -f 99 taskset -c "${CPU_ID}" "${TARGET_EXE}" "$@"
+chrt -f 99 taskset -c "${CPU_ID}" "${BIN}" "$@"

@@ -91,12 +91,12 @@ template <typename Func>
 
 template <typename Func>
 [[nodiscard]] ResultT TestThroughput(Func&& testing_func, const size_t buckets_num    = 100,
-                                                          const size_t buckets_size   = 100,
+                                                          const size_t bucket_size    = 100,
                                                           const size_t test_size      = 10,
                                                           const double emissions_part = 0.05)
 {
     auto wrapper = [&]() __attribute__((always_inline)) { detail::RunAndProtectThroughput(testing_func); };
-    return detail::BucketsCleverTest(wrapper, buckets_num, buckets_size, test_size, emissions_part);
+    return detail::BucketsCleverTest(wrapper, buckets_num, bucket_size, test_size, emissions_part);
 }
 
 } // namespace dumb_math::benchmarking

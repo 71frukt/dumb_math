@@ -1,9 +1,9 @@
 #pragma once
 
 #include <cstdint>
-#include "tools/tools.hpp"
+#include "tools/mersenne_mod_exp.hpp"
 
-namespace dumb_math::random {
+namespace dumb_math::random::engines {
 
 class Minstd
 {
@@ -43,4 +43,4 @@ private:
 };
 
 
-} // namespace dumb_math::random
+} // namespace dumb_math::random::engines

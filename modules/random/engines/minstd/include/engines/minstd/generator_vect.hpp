@@ -1,6 +1,6 @@
 #pragma once
 
-namespace dumb_math::random {
+namespace dumb_math::random::engines {
 
 
 class MinstdVect
@@ -9,4 +9,4 @@ class MinstdVect
 };
 
 
-} // namespace dumb_math::random
+} // namespace dumb_math::random::engines

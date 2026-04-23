@@ -5,7 +5,7 @@
 #include <utility>
 #include <cmath>
 
-#include "rnd_normal_generator/rnd_normal_generator.hpp"
+#include "distributions/normal/generator.hpp"
 
 namespace dumb_math::random {
 

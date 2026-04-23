@@ -18,8 +18,8 @@ void CheckCpuGovernor()
         if (governor != "performance")
         {
             RLSU_WARNING("CPU governor is set to '{}''. Frequency scaling is enabled.\n"
-                                "Benchmark results may be noisy.                           \n"
-                                "Run `sudo ./utils/set_performance.sh` before testing.      \n");
+                                "Benchmark results may be noisy.                            \n"
+                                "Run `sudo ./utils/set_performance.sh` before testing.      \n", governor);
         }
     }
 }

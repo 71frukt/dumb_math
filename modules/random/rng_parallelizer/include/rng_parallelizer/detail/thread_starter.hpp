@@ -9,15 +9,16 @@
 #include <cstdint>
 #include <sched.h>
 #include <cstring>
-#include <type_traits>
 #include <mutex>
 #include <cerrno>
+#include "../concepts.hpp"
 #include "RLogSU/logger.hpp"
+
 
 namespace dumb_math::random {
 namespace detail {
 
-template <typename RngType, typename TaskFunc>
+template <concepts::RngType RngT, typename TaskFunc>
 struct ThreadContext
 {
     uint32_t seed;
@@ -28,7 +29,7 @@ struct ThreadContext
 
     TaskFunc task;
     
-    using ResultType = std::invoke_result_t<TaskFunc, RngType&, uint64_t>;
+    using ResultType = std::invoke_result_t<TaskFunc, RngT&, uint64_t>;
     static_assert(std::is_default_constructible_v<ResultType>, 
                   "Task return type must be default constructible");
                   
@@ -39,10 +40,10 @@ struct ThreadContext
 inline std::once_flag sched_warning_eprem_flag;     // threads priority
 inline std::once_flag sched_warning_einval_flag;    // invalid policy
 
-template <typename RngType, typename TaskFunc>
+template <concepts::RngType RngT, typename TaskFunc>
 void* StartRngThreadOnCore(void* context)
 {
-    auto* thread_ctx = static_cast<ThreadContext<RngType, TaskFunc>*>(context);
+    auto* thread_ctx = static_cast<ThreadContext<RngT, TaskFunc>*>(context);
 
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
@@ -72,7 +73,7 @@ void* StartRngThreadOnCore(void* context)
         }
     }
 
-    RngType rng(thread_ctx->seed);
+    RngT rng(thread_ctx->seed);
     rng.skipahead(thread_ctx->offset);
 
     thread_ctx->result = thread_ctx->task(rng, thread_ctx->n_elements);

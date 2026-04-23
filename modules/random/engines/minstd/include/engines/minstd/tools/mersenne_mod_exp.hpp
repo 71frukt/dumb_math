@@ -2,8 +2,7 @@
 
 #include <cstdint>
 
-namespace dumb_math::random {
-namespace tools {
+namespace dumb_math::random::engines::tools {
 
 constexpr uint64_t MERSENNE_NUM = (0x1UL << 31) - 1;
 
@@ -17,5 +16,5 @@ inline uint32_t MersenneMod(uint64_t x)
     return mod2;
 }
 
-} // namespace tools
-} // namespace dumb_math::random
+} // namespace dumb_math::random::engines::tools
+

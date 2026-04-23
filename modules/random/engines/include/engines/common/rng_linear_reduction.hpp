@@ -3,7 +3,7 @@
 #include <random>
 #include "RLogSU/logger.hpp"
 
-namespace dumb_math::random::common {
+namespace dumb_math::random::engines::common {
 
 template <std::uniform_random_bit_generator generatorT, typename CalcT>
 CalcT GenerateInSection(generatorT engine, CalcT left_bound, CalcT right_bound)
@@ -20,4 +20,4 @@ CalcT GenerateInSection(generatorT engine, CalcT left_bound, CalcT right_bound)
     return static_cast<CalcT>(generated);
 }
 
-} // namespace dumb_math::random::common
+} // namespace dumb_math::random::engines::common
