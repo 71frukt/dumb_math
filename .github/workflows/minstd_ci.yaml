@@ -18,6 +18,10 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/71frukt/dumb-math-env:latest
 
+    # для подавления предупреждения Node.js. actions/checkout@v4 пока работает на Node.js 20, а будет на 24
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     strategy:
       fail-fast: false
       matrix:
