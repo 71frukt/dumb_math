@@ -1,0 +1,45 @@
+name: CI minstd
+
+on:
+  push:
+    paths:
+      - 'modules/random/**'
+      - '.github/workflows/minstd_ci.yaml'
+  pull_request:
+    paths:
+      - 'modules/minstd/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/71frukt/dumb-math-env:latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Release, Debug]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure CMake
+      run: | 
+        cmake -S . -B build \
+              -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+              -DCMAKE_SYSTEM_PREFIX_PATH="/usr;/usr/local"
+
+    - name: Build project and Generate test data
+      run: |
+        cmake --build build -j $(nproc)
+
+    - name: Run CTest
+      run: |
+        ctest --test-dir build/modules/random/engines/minstd/tests/validation \
+              --build-config ${{ matrix.build_type }} \
+              --output-on-failure
+              
