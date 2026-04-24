@@ -8,9 +8,27 @@
 
 namespace dumb_math::random::tests {
 
-TEST(RngParallelizer, DynamicChunkingAndOffsetsInCI)
+class RngParallelizerParamTest : public ::testing::TestWithParam<uint64_t> {};
+
+INSTANTIATE_TEST_SUITE_P(
+    TotalElemsSizes,
+    RngParallelizerParamTest,
+    ::testing::Values(
+        0,
+        1,
+        2,
+        10,
+        100,
+        1'000,
+        10'000,
+        50'000,
+        100'000
+    )
+);
+
+TEST_P(RngParallelizerParamTest, DynamicChunkingAndOffsets)
 {
-    const uint64_t total_elements = 1000;
+    const uint64_t total_elements = GetParam();
     DummyTask task;
 
     std::vector<int> cores = GetCores();
