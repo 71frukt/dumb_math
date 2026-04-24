@@ -57,6 +57,8 @@ auto RngParallelRun(uint64_t total_elements, uint32_t engine_calls_per_elem, uin
 
     for (int i = 0; i < num_threads; ++i)
     {
+        // TODO: тут каждый раз skipahead считается заново,
+        // хотя следующий поток может использовать начальное значение предыдущего
         int rc = pthread_create(&threads[i], nullptr, 
                                 detail::StartRngThreadOnCore<RngT, TaskFunc>, 
                                 &contexts[i]);

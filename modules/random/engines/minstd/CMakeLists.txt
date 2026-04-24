@@ -18,4 +18,5 @@ option(MINSTD_BUILD_TESTING "Build MINSTD tests" ON)
 
 if(MINSTD_BUILD_TESTING)
     add_subdirectory(tests/benchmark)
+    add_subdirectory(tests/validation)
 endif()
