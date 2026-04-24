@@ -21,15 +21,24 @@ requires requires(TaskFunc task, RngT& rng, uint64_t count) {
 auto RngParallelRun(uint64_t total_elements, uint32_t engine_calls_per_elem, uint32_t seed, 
                     TaskFunc task, int rt_priority, std::vector<int> target_cores)
 {
+    int available_p_cores = 0;
+    int num_threads = 0;
+
     if (target_cores.empty())
     {
         target_cores = detail::GetPhysicalPCores();
         RLSU_INFO("target_cores (pcores) = {}", target_cores);
+        
+        available_p_cores = target_cores.size();
+        num_threads       = (available_p_cores > 1) ? available_p_cores - 1 : 1;
     }
 
-    int available_p_cores = target_cores.size();
+    else
+    {
+        available_p_cores = target_cores.size();
+        num_threads       = available_p_cores;
+    }
 
-    int num_threads = (available_p_cores > 1) ? available_p_cores - 1 : 1;
 
     uint64_t n_per_thread = total_elements / num_threads;
     uint64_t remainder = total_elements % num_threads;

@@ -48,7 +48,13 @@ CalcT PiMonteCarloScalarOneThread(uint64_t points_num)
 template <std::uniform_random_bit_generator generatorT, std::floating_point CalcT>
 CalcT PiMonteCarloScalarMultiThread(uint64_t points_num)
 {
-    std::vector<uint32_t> points_in_circle_nums = RngParallelRun<generatorT>(points_num, 2, 12345, AccumPiPointsScalar<generatorT>);
+    int policy = SCHED_FIFO;
+    struct sched_param param;
+    std::memset(&param, 0, sizeof(param));
+    param.sched_priority = sched_get_priority_max(policy);
+
+    std::vector<uint32_t> points_in_circle_nums = RngParallelRun<generatorT>(points_num, 2, 12345, 
+                                                                        AccumPiPointsScalar<generatorT>, param.sched_priority);
     
     uint64_t all_points_in_circle_num = 0;
     for (uint32_t res : points_in_circle_nums)

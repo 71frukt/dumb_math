@@ -16,7 +16,7 @@ namespace dumb_math::random {
     
     param.sched_priority = sched_get_priority_max(policy);
 */
-// and call RngParallelRun(... , ... , ... , &sched_priority);
+// and call RngParallelRun(... , ... , ... , param.sched_priority);
 
 template <concepts::RngType RngT, typename TaskFunc>
 requires requires(TaskFunc task, RngT& rng, uint64_t count) {
