@@ -1,7 +1,13 @@
 project(minstd LANGUAGES CXX)
 
 add_library(${PROJECT_NAME} STATIC
+    src/generator_vect.cpp
     src/tools/mersenne_mod_exp.cpp
+)
+
+target_compile_options(${PROJECT_NAME} 
+    PUBLIC 
+        -mavx2
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -11,6 +17,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     RLogSU
+    rng_parallelizer
 )
 
 #================= Tests =============================================

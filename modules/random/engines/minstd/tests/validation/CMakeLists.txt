@@ -1,7 +1,8 @@
 project(minstd_validation_tests)
 
 add_executable(${PROJECT_NAME}
-    skipahead_test.cpp
+    scalar_skipahead_test.cpp
+    vector_skipahead_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -1,46 +1,40 @@
 #pragma once
 
 #include <cstdint>
+#include <immintrin.h>
+#include "rng_parallelizer/concepts.hpp"
+
 #include "tools/mersenne_mod_exp.hpp"
 
 namespace dumb_math::random::engines {
 
-class MinstdVect
+class MinstdAVX2
 {
 public:
-    explicit MinstdVect(uint32_t seed = 12345)
-    {
-        state_ = (seed == 0 || seed == tools::MERSENNE_NUM) ? 1 : tools::MersenneMod(seed);
-    }
+    explicit MinstdAVX2(uint32_t seed = 12345);
 
 public:
-    using result_t = uint32_t;
+
+    using result_t = __m256i;
     
-    static constexpr result_t min() { return 1; }
-    static constexpr result_t max() { return tools::MERSENNE_NUM - 1; }
+    static constexpr uint32_t min() noexcept { return 1; }
+    static constexpr uint32_t max() noexcept { return tools::MERSENNE_NUM - 1; }
 
-    result_t operator()()
-    {
-        uint64_t ax = a_ * state_;
-        uint32_t ax_mod_m = tools::MersenneMod(ax);
-        
-        state_ = ax_mod_m;
+    result_t operator()();
 
-        return ax_mod_m;
-    }
-
-    void skipahead(uint64_t offset)
-    {
-        uint64_t multiplier = tools::FastMersenneModExp(a_, offset);
-
-        uint64_t new_state = state_ * multiplier;
-        state_ = tools::MersenneMod(new_state);
-    }
+    void skipahead(uint64_t offset);
 
 private:
     static constexpr uint64_t a_ = 48271;
-    uint64_t state_;
+    
+    __m256i state_vec_;
+    __m256i a_vec_;
+
+    // state * mult mod M
+    static inline __m256i StateMulMod(__m256i state, __m256i mult);
 };
 
+
+static_assert(concepts::SimdRngType<MinstdAVX2>, "DummyRng does not satisfy RngParallelizable concept!");
 
 } // namespace dumb_math::random::engines

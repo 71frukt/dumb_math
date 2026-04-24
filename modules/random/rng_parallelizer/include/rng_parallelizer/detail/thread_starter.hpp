@@ -18,7 +18,7 @@
 namespace dumb_math::random {
 namespace detail {
 
-template <concepts::RngType RngT, typename TaskFunc>
+template <concepts::RngParallelizable RngT, typename TaskFunc>
 struct ThreadContext
 {
     uint32_t seed;
@@ -40,7 +40,7 @@ struct ThreadContext
 inline std::once_flag sched_warning_eprem_flag;     // threads priority
 inline std::once_flag sched_warning_einval_flag;    // invalid policy
 
-template <concepts::RngType RngT, typename TaskFunc>
+template <concepts::RngParallelizable RngT, typename TaskFunc>
 void* StartRngThreadOnCore(void* context)
 {
     auto* thread_ctx = static_cast<ThreadContext<RngT, TaskFunc>*>(context);

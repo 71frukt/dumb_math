@@ -6,12 +6,12 @@
 
 // ----- concepts.hpp -------------------
 template <typename T>
-concept RngType = std::uniform_random_bit_generator<T> && requires(T a, uint64_t steps) {
+concept RngParallelizable = std::uniform_random_bit_generator<T> && requires(T a, uint64_t steps) {
     { a.skipahead(steps) } -> std::same_as<void>;
 };
 
 // ------ rng_parallelizer.hpp ----------
-template <concepts::RngType RngT, typename TaskFunc>
+template <concepts::RngParallelizable RngT, typename TaskFunc>
 requires requires(TaskFunc task, RngT& rng, uint64_t count) {
     { task(rng, count) } -> std::default_initializable;
 }
@@ -40,7 +40,7 @@ auto RngParallelRun(uint64_t total_elements, uint32_t engine_calls_per_elem, uin
 ```cpp
 
 template <typename T>
-concept RngType = std::uniform_random_bit_generator<T> && requires(T a, uint64_t steps) {
+concept RngParallelizable = std::uniform_random_bit_generator<T> && requires(T a, uint64_t steps) {
     { a.skipahead(steps) } -> std::same_as<void>;
 };
 ```
@@ -61,7 +61,7 @@ struct DummyRng
     static constexpr uint64_t max() { return UINT64_MAX; }
 };
 
-static_assert(concepts::RngType<DummyRng>, "DummyRng does not satisfy RngType concept!");
+static_assert(concepts::RngParallelizable<DummyRng>, "DummyRng does not satisfy RngParallelizable concept!");
 
 struct TaskExecutionRecord
 {

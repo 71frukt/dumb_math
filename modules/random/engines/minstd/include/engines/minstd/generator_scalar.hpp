@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include "tools/mersenne_mod_exp.hpp"
+#include "rng_parallelizer/concepts.hpp"
 
 namespace dumb_math::random::engines {
 
@@ -41,6 +42,8 @@ private:
     static constexpr uint64_t a_ = 48271;
     uint64_t state_;
 };
+
+static_assert(concepts::RngParallelizable<Minstd>, "DummyRng does not satisfy RngParallelizable concept!");
 
 
 } // namespace dumb_math::random::engines

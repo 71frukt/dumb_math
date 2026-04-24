@@ -18,7 +18,7 @@ namespace dumb_math::random {
 */
 // and call RngParallelRun(... , ... , ... , param.sched_priority);
 
-template <concepts::RngType RngT, typename TaskFunc>
+template <concepts::RngParallelizable RngT, typename TaskFunc>
 requires requires(TaskFunc task, RngT& rng, uint64_t count) {
     { task(rng, count) } -> std::default_initializable;
 }

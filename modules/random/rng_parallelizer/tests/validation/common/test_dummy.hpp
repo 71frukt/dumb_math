@@ -20,7 +20,7 @@ struct DummyRng
     static constexpr uint64_t max() { return UINT64_MAX; }
 };
 
-static_assert(concepts::RngType<DummyRng>, "DummyRng does not satisfy RngType concept!");
+static_assert(concepts::RngParallelizable<DummyRng>, "DummyRng does not satisfy RngParallelizable concept!");
 
 struct TaskExecutionRecord
 {
