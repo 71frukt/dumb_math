@@ -16,8 +16,10 @@ struct DummyRng
     
     void skipahead(uint64_t steps) { offset += steps; }
     
-    static constexpr uint64_t min() { return 0; }
-    static constexpr uint64_t max() { return UINT64_MAX; }
+    static constexpr uint64_t min()       noexcept { return 0; }
+    static constexpr uint64_t max()       noexcept { return UINT64_MAX; }
+    static constexpr uint32_t dimension() noexcept { return 1; }
+
 };
 
 static_assert(concepts::RngParallelizable<DummyRng>, "DummyRng does not satisfy RngParallelizable concept!");

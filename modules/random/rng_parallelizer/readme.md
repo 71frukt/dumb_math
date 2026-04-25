@@ -15,12 +15,12 @@ template <concepts::RngParallelizable RngT, typename TaskFunc>
 requires requires(TaskFunc task, RngT& rng, uint64_t count) {
     { task(rng, count) } -> std::default_initializable;
 }
-auto RngParallelRun(uint64_t total_elements, uint32_t engine_calls_per_elem, uint32_t seed, 
+auto RngParallelRun(uint64_t total_elements, uint32_t skipahead_step, uint32_t seed, 
                     TaskFunc task, int rt_priority, std::vector<int> target_cores)
 
 ```
 
-Функция распределяет вычисление `total_elements` элементов, каждый из которых требует `engine_calls_per_elem` вызовов генератора, по ядрам процессора. Функция `task` должна принимать ссылку на `std::uniform_random_bit_generator<T>`, у которого определён метод `skipahead()`, необходимый для установления стартовых состояний генераторов перед общим запуском, что исключает пересечение генерируемых последовательностей в разных потоках.
+Функция распределяет вычисление `total_elements` элементов, каждый из которых требует `skipahead_step` вызовов генератора, по ядрам процессора. Функция `task` должна принимать ссылку на `std::uniform_random_bit_generator<T>`, у которого определён метод `skipahead()`, необходимый для установления стартовых состояний генераторов перед общим запуском, что исключает пересечение генерируемых последовательностей в разных потоках.
 
 `rt_priority` определяет приоритет потоков на ядрах.  
 Если массив ядер, на которых требуется запускать функцию `task` пуст, параллелизатор определяет набор физических ядер машины, используя информацию в `/sys/devices/system/cpu/`. При наличии более одного производительного (P-core) ядра, одно ядро резервируется под нужды операционной системы, а остальные выделяются под выполнение task.

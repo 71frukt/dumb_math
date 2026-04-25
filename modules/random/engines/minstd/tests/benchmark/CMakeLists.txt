@@ -3,20 +3,19 @@ project(minstd_performance_test LANGUAGES CXX)
 set(BENCHMARK_ITERATIONS 50000000)
 # set(BENCHMARK_ITERATIONS 50)
 
-add_executable(throughput_scalar_one_thread
-    throughput_scalar_one_thread.cpp
-)
-
-add_executable(throughput_scalar_multi_thread
-    throughput_scalar_multi_thread.cpp
-)
-
 set(BENCHMARK_TARGETS
     throughput_scalar_one_thread
     throughput_scalar_multi_thread
+    throughput_vector_one_thread
+    throughput_vector_multi_thread
 )
 
 foreach(TARGET_NAME IN LISTS BENCHMARK_TARGETS)
+
+    add_executable(${TARGET_NAME}
+        ${TARGET_NAME}.cpp
+    )   
+
     target_link_libraries(${TARGET_NAME} PRIVATE benchmarking)
 endforeach()
       
@@ -72,3 +71,37 @@ set_tests_properties(throughput_scalar_multi_thread_test
 )
 
 # ===================== /Scalar Multi Thread Test ====================================
+
+# ===================== Vector One Thread Test =====================================
+
+add_test(NAME throughput_vector_one_thread_test 
+         COMMAND sudo ${BENCHMARKING_ENV_SETUP_DIR}/run_max_priority.sh
+         $<TARGET_FILE:throughput_vector_one_thread>
+         ${BENCHMARK_CPU_ID}
+         ${BENCHMARK_ITERATIONS}
+)
+         
+set_tests_properties(throughput_vector_one_thread_test
+    PROPERTIES
+        FIXTURES_REQUIRED PerfFixture
+        RUN_SERIAL TRUE
+)
+
+# ===================== /Vector One Thread Test ====================================
+
+# ===================== Vector Multi Thread Test =====================================
+
+add_test(NAME throughput_vector_multi_thread_test 
+         COMMAND sudo ${BENCHMARKING_ENV_SETUP_DIR}/run_max_priority.sh
+         $<TARGET_FILE:throughput_vector_multi_thread>
+         ${BENCHMARK_CPU_ID}
+         ${BENCHMARK_ITERATIONS}
+)
+         
+set_tests_properties(throughput_vector_multi_thread_test
+    PROPERTIES
+        FIXTURES_REQUIRED PerfFixture
+        RUN_SERIAL TRUE
+)
+
+# ===================== /Vector Multi Thread Test ====================================

@@ -18,7 +18,7 @@ template <concepts::RngParallelizable RngT, typename TaskFunc>
 requires requires(TaskFunc task, RngT& rng, uint64_t count) {
     { task(rng, count) } -> std::default_initializable;
 }
-auto RngParallelRun(uint64_t total_elements, uint32_t engine_calls_per_elem, uint32_t seed, 
+auto RngParallelRun(uint64_t total_elements, uint32_t skipahead_step, uint32_t seed, 
                     TaskFunc task, int rt_priority, std::vector<int> target_cores)
 {
     int available_p_cores = 0;
@@ -40,8 +40,12 @@ auto RngParallelRun(uint64_t total_elements, uint32_t engine_calls_per_elem, uin
     }
 
 
-    uint64_t n_per_thread = total_elements / num_threads;
-    uint64_t remainder = total_elements % num_threads;
+    uint64_t raw_n_per_thread = total_elements / num_threads;
+    uint64_t period = (RngT::dimension() * skipahead_step);
+    uint64_t n_per_thread = (raw_n_per_thread / period) * period;
+    uint64_t remainder = total_elements - (n_per_thread * num_threads);
+
+    RLSU_ASSERT(n_per_thread % RngT::dimension() == 0);
 
     using ResultType = typename detail::ThreadContext<RngT, TaskFunc>::ResultType;
     
@@ -53,7 +57,7 @@ auto RngParallelRun(uint64_t total_elements, uint32_t engine_calls_per_elem, uin
     {
         contexts[i].seed = seed;
         contexts[i].n_elements = n_per_thread + (i == num_threads - 1 ? remainder : 0);
-        contexts[i].offset = i * n_per_thread * engine_calls_per_elem;
+        contexts[i].offset = (i * n_per_thread * skipahead_step) / RngT::dimension();
         
         contexts[i].core_id = target_cores[i];
         contexts[i].rt_priority = rt_priority;

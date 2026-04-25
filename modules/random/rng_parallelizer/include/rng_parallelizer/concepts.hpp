@@ -8,6 +8,7 @@ namespace dumb_math::random::concepts {
 template <typename T>
 concept RngParallelizable = requires(T a, uint64_t steps) {
     { a.skipahead(steps) } -> std::same_as<void>;
+    { T::dimension()     } -> std::same_as<uint32_t>;    
 };
 
 

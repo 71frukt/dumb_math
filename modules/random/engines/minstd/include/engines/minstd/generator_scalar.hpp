@@ -17,8 +17,9 @@ public:
 public:
     using result_t = uint32_t;
     
-    static constexpr result_t min() { return 1; }
-    static constexpr result_t max() { return tools::MERSENNE_NUM - 1; }
+    static constexpr result_t min()       noexcept { return 1; }
+    static constexpr result_t max()       noexcept { return tools::MERSENNE_NUM - 1; }
+    static constexpr uint32_t dimension() noexcept { return 1; }
 
     result_t operator()()
     {

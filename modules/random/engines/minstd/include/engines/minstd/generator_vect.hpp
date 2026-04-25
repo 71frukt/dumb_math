@@ -17,8 +17,9 @@ public:
 
     using result_t = __m256i;
     
-    static constexpr uint32_t min() noexcept { return 1; }
-    static constexpr uint32_t max() noexcept { return tools::MERSENNE_NUM - 1; }
+    static constexpr uint32_t min()       noexcept { return 1; }
+    static constexpr uint32_t max()       noexcept { return tools::MERSENNE_NUM - 1; }
+    static constexpr uint32_t dimension() noexcept { return 8; }
 
     result_t operator()();
 
