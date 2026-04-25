@@ -43,21 +43,20 @@ void MinstdAVX2::skipahead(uint64_t offset)
 
 __m256i MinstdAVX2::StateMulMod(__m256i state, __m256i mult)
 {
-    // 1. Умножение (32-bit * 32-bit = 64-bit)
-    // Четные каналы (0, 2, 4, 6)
+    // 32-bit * 32-bit = 64-bit
+    // каналы 0, 2, 4, 6
     __m256i even_64 = _mm256_mul_epu32(state, mult);
     
-    // Нечетные каналы (1, 3, 5, 7) сдвигаются на четные позиции перед умножением
+    // нечетные каналы сдвигаются на четные позиции перед умножением
     __m256i state_odd = _mm256_srli_epi64(state, 32);
     __m256i odd_64    = _mm256_mul_epu32(state_odd, mult);
 
-    // 2. Редукция Мерсенна (применяется дважды для гарантии попадания в M)
     __m256i mask_mersenne_num = _mm256_set1_epi64x(tools::MERSENNE_NUM);
     
     auto reduce = [&](__m256i x) -> __m256i {
         __m256i low   = _mm256_and_si256(x, mask_mersenne_num);     // x &= mask_mersenne_num
         __m256i high  = _mm256_srli_epi64(x, 31);               // x >>= 31
-        __m256i sum   = _mm256_add_epi64(low, high);                // 
+        __m256i sum   = _mm256_add_epi64(low, high);
         
         __m256i low2  = _mm256_and_si256(sum, mask_mersenne_num);
         __m256i high2 = _mm256_srli_epi64(sum, 31);

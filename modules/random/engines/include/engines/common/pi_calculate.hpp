@@ -153,7 +153,7 @@ CalcT PiMonteCarloVectorMultiThread(uint64_t points_num)
         12345, 
         AccumPiPointsVector<generatorT>, 
         param.sched_priority,
-        {0, 1, 6}
+        {0, 3, 6}
     );
     
     uint64_t all_points_in_circle_num = 0;

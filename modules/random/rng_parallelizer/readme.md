@@ -40,8 +40,9 @@ auto RngParallelRun(uint64_t total_elements, uint32_t skipahead_step, uint32_t s
 ```cpp
 
 template <typename T>
-concept RngParallelizable = std::uniform_random_bit_generator<T> && requires(T a, uint64_t steps) {
+concept RngParallelizable = requires(T a, uint64_t steps) {
     { a.skipahead(steps) } -> std::same_as<void>;
+    { T::dimension()     } -> std::same_as<uint32_t>;    
 };
 ```
 

@@ -44,7 +44,7 @@ private:
     uint64_t state_;
 };
 
-static_assert(concepts::RngParallelizable<Minstd>, "DummyRng does not satisfy RngParallelizable concept!");
+static_assert(concepts::ScalarRngType<Minstd>, "DummyRng does not satisfy RngParallelizable concept!");
 
 
 } // namespace dumb_math::random::engines

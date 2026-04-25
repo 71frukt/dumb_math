@@ -13,7 +13,7 @@ uint32_t FastMersenneModExp(uint64_t base, uint64_t exp)
         if (exp & 1)    // exp % 2 != 0
         {
             uint64_t mul = multiplier * base;
-            multiplier = tools::MersenneMod(mul);
+            multiplier = tools::MersenneMod(mul); // = mul mod m
         }
 
         uint64_t base2 = base * base;
