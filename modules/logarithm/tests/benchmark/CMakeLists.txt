@@ -25,7 +25,7 @@ add_test(NAME EnvTeardown
          COMMAND sudo ${BENCHMARKING_ENV_SETUP_DIR}/restore_cpu_state.sh)
 set_tests_properties(EnvTeardown PROPERTIES FIXTURES_CLEANUP PerfFixture)
 
-add_test(NAME MinstdRunPerfTest 
+add_test(NAME LnRunPerfTest 
          COMMAND sudo ${BENCHMARKING_ENV_SETUP_DIR}/run_max_priority.sh $<TARGET_FILE:${PROJECT_NAME}> ${BENCHMARK_CPU_ID})
          
-set_tests_properties(MinstdRunPerfTest PROPERTIES FIXTURES_REQUIRED PerfFixture)
+set_tests_properties(LnRunPerfTest PROPERTIES FIXTURES_REQUIRED PerfFixture)
