@@ -56,14 +56,14 @@ int main()
 
     using namespace dumb_math::benchmarking;
 
-    ResultT perf_results = TestThroughput([&]()
+    ResultT mc_perf_results = TestThroughput([&]()
     {
         mc_solver.calculate_call(params);
     }, 10, 3);
 
     std::cout << "\n=== MONTE CARLO PERFORMANCE DATA ===\n"
-              << "Average Throughput: " << std::fixed << std::setprecision(2) << perf_results.average << " tacts\n"
-              << "Standard Deviation: " << perf_results.standard_deviation << " tacts\n";
+              << "Average Throughput: " << std::fixed << std::setprecision(2) << mc_perf_results.average << " tacts\n"
+              << "Standard Deviation: " << mc_perf_results.standard_deviation << " tacts\n";
 
     return 0;
 }

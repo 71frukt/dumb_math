@@ -40,12 +40,15 @@ auto RngParallelRun(uint64_t total_elements, uint32_t skipahead_step, uint32_t s
     }
 
 
+    uint64_t dimension = RngT::dimension();
+    // Идеальный минимальный размер чанка элементов
+    uint64_t period = std::lcm(dimension, skipahead_step) / skipahead_step; 
+
     uint64_t raw_n_per_thread = total_elements / num_threads;
-    uint64_t period = (RngT::dimension() * skipahead_step);
     uint64_t n_per_thread = (raw_n_per_thread / period) * period;
     uint64_t remainder = total_elements - (n_per_thread * num_threads);
 
-    RLSU_ASSERT(n_per_thread % RngT::dimension() == 0);
+    RLSU_ASSERT((n_per_thread * skipahead_step) % dimension == 0);
 
     using ResultType = typename detail::ThreadContext<RngT, TaskFunc>::ResultType;
     
