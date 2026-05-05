@@ -23,3 +23,4 @@ target_link_libraries(ln_tests_common
 
 add_subdirectory(unit)
 add_subdirectory(statistics)
+add_subdirectory(benchmark)

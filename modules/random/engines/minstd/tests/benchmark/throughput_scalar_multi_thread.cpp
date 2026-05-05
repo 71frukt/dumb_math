@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
                                                                      1,
                                                                        1);
 
-    std::cout << "[Throughput: scalar, multi thread]"       << std::endl
+    std::cout << "[Throughput: scalar, multi thread]"   << std::endl
               << "pi = " << pi                          << std::endl
               << "clocs = " << bench_res.average
               << " +- " << bench_res.standard_deviation << std::endl
