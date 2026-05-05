@@ -83,6 +83,7 @@ add_subdirectory(modules/benchmarking)
 add_subdirectory(modules/random)
 add_subdirectory(modules/logarithm)
 add_subdirectory(modules/matrix)
+add_subdirectory(modules/finance/european_option)
 #========================================= /MODULES ===================================================
 
 add_library(${PROJECT_NAME} INTERFACE)
