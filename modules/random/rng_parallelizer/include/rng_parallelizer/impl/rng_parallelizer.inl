@@ -41,7 +41,6 @@ auto RngParallelRun(uint64_t total_elements, uint32_t skipahead_step, uint32_t s
 
 
     uint64_t dimension = RngT::dimension();
-    // Идеальный минимальный размер чанка элементов
     uint64_t period = std::lcm(dimension, skipahead_step) / skipahead_step; 
 
     uint64_t raw_n_per_thread = total_elements / num_threads;

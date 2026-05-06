@@ -2,6 +2,8 @@
 #include "european_option/analytical.hpp"
 #include "european_option/monte_carlo.hpp"
 #include "benchmarking/benchmarking.hpp"
+#include "engines/minstd/generator_scalar.hpp"
+
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -32,24 +34,23 @@ void print_report(const option_params& params, std::size_t num_paths, unsigned i
 
 int main()
 {
+
     const option_params params
     {
-        0.05,  // r [cite: 236]
-        0.1,   // sigma [cite: 236]
-        100.0, // s0 [cite: 236]
-        100.0, // k [cite: 236]
-        1.0    // t [cite: 236]
+        0.05,       // r [cite: 236]
+        0.1,    // sigma [cite: 236]
+        100.0,     // s0 [cite: 236]
+        100.0,      // k [cite: 236]
+        1.0         // t [cite: 236]
     };
 
-    const std::size_t num_paths = 1000000; // Total trajectory count [cite: 116, 236]
+    const std::size_t num_paths = 100000;
     const unsigned int seed = 2125306575;
 
-    // Calculate baseline using Black-Scholes analytical approach [cite: 16, 19]
     analytical_solver bs_solver;
     const double bs_price = bs_solver.calculate_call(params);
 
-    // Execute Monte Carlo simulation based on analytical solution of the SDE [cite: 108, 114]
-    monte_carlo_solver mc_solver(num_paths, seed);
+    monte_carlo_solver<dumb_math::random::engines::Minstd> mc_solver(num_paths, seed);
     const double mc_price = mc_solver.calculate_call(params);
 
     print_report(params, num_paths, seed, mc_price, bs_price);
@@ -62,6 +63,7 @@ int main()
     }, 10, 3);
 
     std::cout << "\n=== MONTE CARLO PERFORMANCE DATA ===\n"
+             << "Total Options Processed: " << 1 << "\n"
               << "Average Throughput: " << std::fixed << std::setprecision(2) << mc_perf_results.average << " tacts\n"
               << "Standard Deviation: " << mc_perf_results.standard_deviation << " tacts\n";
 

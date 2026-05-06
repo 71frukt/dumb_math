@@ -1,0 +1,22 @@
+=== EXECUTION REPORT (First Option in Batch) ===
+ [Market & Instrument Data]
+   Spot Price (s0)          : 130.87695
+   Strike Price (k)         : 143.77852
+   Risk-free Rate (r)       : 0.08136
+   Volatility (sigma)       : 0.18752
+   Time to Maturity (t)     : 0.18586
+ 
+ [Simulation Configuration]
+   Path Count (N)           : 100000
+   RNG Seed                 : 2125306575
+ 
+ [Pricing Results]
+   Monte Carlo Price        : 0.95871
+   Analytical BS Price      : 0.95927
+   Absolute Error           : 0.00056
+   Relative Error (%)       : 0.05823%
+ 
+ === MONTE CARLO PERFORMANCE DATA (BATCH AVX2) ===
+ Total Options Processed: 100
+ Average Throughput     : 30438650.11 tacts
+ Standard Deviation     : 244863.77 tacts

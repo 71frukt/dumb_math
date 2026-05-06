@@ -1,39 +1,40 @@
-#pragma once
-#include "option_params.hpp"
-#include <cstddef>
-#include <cmath>
 #include <random>
+#include <cmath>
 #include <algorithm>
+#include <sched.h>
+#include "european_option/option_params.hpp"
+#include "rng_parallelizer/concepts.hpp"
 
+template <dumb_math::random::concepts::ScalarRngType GeneratorT>
 class monte_carlo_solver
 {
 public:
-    explicit monte_carlo_solver(std::size_t num_paths, unsigned int seed)
-    : num_paths_(num_paths)
-    , seed_(seed)
-    {}
-
-    double calculate_call(const option_params& params) const
+    monte_carlo_solver(std::size_t num_paths, unsigned int seed)
+        : num_paths_(num_paths)
+        , rng_(seed)
     {
-        std::mt19937_64 rng(seed_);; 
-        std::normal_distribution<double> dist(0.0, 1.0);
+    }
 
-        double drift = (params.r - 0.5 * params.sigma * params.sigma) * params.t;
-        double vol = params.sigma * std::sqrt(params.t);
+    double calculate_call(const option_params& params)
+    {
+        const double drift = (params.r - 0.5 * params.sigma * params.sigma) * params.t;
+        const double vol_sqrt_t = params.sigma * std::sqrt(params.t);
+        const double discount = std::exp(-params.r * params.t);
+
+        std::normal_distribution<double> dist(0.0, 1.0);
         double sum_payoffs = 0.0;
 
         for (std::size_t i = 0; i < num_paths_; ++i)
         {
-            double z = dist(rng);
-            double s_t = params.s0 * std::exp(drift + vol * z);
+            const double z = dist(rng_);
+            const double s_t = params.s0 * std::exp(drift + vol_sqrt_t * z);
             sum_payoffs += std::max(s_t - params.k, 0.0);
         }
 
-        double discount = std::exp(-params.r * params.t);
-        return discount * (sum_payoffs / num_paths_);
+        return discount * (sum_payoffs / static_cast<double>(num_paths_));
     }
 
 private:
     std::size_t num_paths_;
-    unsigned int seed_;
+    GeneratorT rng_;
 };
