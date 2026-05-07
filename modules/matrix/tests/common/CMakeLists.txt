@@ -7,7 +7,6 @@ target_link_libraries(common
         assets::config
 
         matrix
-        random
         RLogSU
 )
 

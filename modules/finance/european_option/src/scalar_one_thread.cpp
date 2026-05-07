@@ -1,6 +1,6 @@
 #include "european_option/option_params.hpp"
 #include "european_option/analytical.hpp"
-#include "european_option/monte_carlo.hpp"
+#include "european_option/monte_carlo_scalar_one_thread.hpp"
 #include "benchmarking/benchmarking.hpp"
 #include "engines/minstd/generator_scalar.hpp"
 
