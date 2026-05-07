@@ -5,7 +5,11 @@
 extern "C" {
 #endif
 
+namespace dumb_math::logarithm {
+
 float logf(float x);
+
+} // namespace dumb_math::logarithm
 
 #ifdef __cplusplus
 }

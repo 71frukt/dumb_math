@@ -1,0 +1,20 @@
+#pragma once
+
+#include <cmath>
+#include <span>
+
+#include "RLogSU/logger.hpp"
+
+namespace rnd_generators_test {
+
+class IFirstLevelTester
+{
+public:
+    virtual ~IFirstLevelTester() = default;
+
+    [[nodiscard]] virtual double GetTestStatistics(std::span<const double> block) const = 0;
+    [[nodiscard]] virtual double GetCDF           (double statistic_y)            const = 0;
+    
+};
+
+} // namespace rnd_generators_test

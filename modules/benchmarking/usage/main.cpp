@@ -26,7 +26,7 @@ __attribute__((noinline)) double DotProduct2(const double* a, const double* b, s
 
     for (; i + 3 < n; i += 4)
     {
-        r0 += a[i] * b[i];
+        r0 += a[i]   * b[i];
         r1 += a[i+1] * b[i+1];
         r2 += a[i+2] * b[i+2];
         r3 += a[i+3] * b[i+3];

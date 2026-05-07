@@ -35,5 +35,8 @@ tar -xzf boost_1_84_0.tar.gz -C ~/
 ## Установка
 
 ```zsh
-git clone https://github.com/71frukt/drugoe_nazvanie-numerical-methods.git
+git clone https://github.com/71frukt/dumb_math.git
 ```
+
+## Модули
+Модули различного функционала располагаются в папке `modules`.

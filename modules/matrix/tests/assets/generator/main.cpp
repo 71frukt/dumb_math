@@ -11,7 +11,7 @@
 #include "assets/config.hpp"
 #include "common/matrix_iostream.hpp"
 #include "matrix/matrix.hpp"
-#include "rnd_bit_generators/mrg32k3a.hpp"
+#include "engines/mrg32k3a/generator.hpp"
 
 namespace dumb_math::matrix::tests::assets::generator {
 

@@ -4,6 +4,7 @@ project(matrix LANGUAGES CXX)
 add_library(${PROJECT_NAME} STATIC 
     src/matrix.cpp
 )
+add_library(dumb_math::matrix ALIAS ${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE

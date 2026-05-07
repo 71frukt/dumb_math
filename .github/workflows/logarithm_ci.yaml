@@ -8,6 +8,7 @@ on:
   pull_request:
     paths:
       - 'modules/logarithm/**'
+      - '.github/workflows/logarithm_ci.yaml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -40,6 +41,10 @@ jobs:
 
     - name: Run CTest
       run: |
-        ctest --test-dir build/modules/logarithm/tests \
+        ctest --test-dir build/modules/logarithm/tests/statistics \
+              --build-config ${{ matrix.build_type }} \
+              --output-on-failure
+
+        ctest --test-dir build/modules/logarithm/tests/unit \
               --build-config ${{ matrix.build_type }} \
               --output-on-failure

@@ -14,7 +14,6 @@ target_link_libraries(${PROJECT_NAME}
 
         RLogSU
         benchmarking
-        random
         GTest::gtest_main
 )
 

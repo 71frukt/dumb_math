@@ -9,6 +9,6 @@ target_link_libraries(${PROJECT_NAME}
         assets::config
         common
 
-        matrix
-        random
+        dumb_math::matrix
+        dumb_math::random
 )

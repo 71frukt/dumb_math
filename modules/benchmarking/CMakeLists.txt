@@ -6,11 +6,11 @@ add_library(${PROJECT_NAME} STATIC
 )
 
 target_link_libraries(${PROJECT_NAME}
+    PUBLIC
+        dumb_math::random
+    
     PRIVATE
         RLogSU
-        
-    INTERFACE
-        random::variance_calc
 )
 
 target_include_directories(${PROJECT_NAME}
